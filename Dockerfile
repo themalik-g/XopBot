@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     bash \
     libvips-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN git clone https://github.com/AstroAnalytics/XopBot /root/bot
+RUN git clone https://github.com/EX-BOTS/Zenon-bot /root/bot
 WORKDIR /root/bot
 RUN npm cache clean --force && rm -rf node_modules
 RUN npm install
