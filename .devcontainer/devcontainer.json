@@ -1,0 +1,10 @@
+{
+    "name": "Ubuntu",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "18"
+        }
+    },
+    "postCreateCommand": "sudo apt update && sudo apt install -y ffmpeg && npm install -g puppeteer"
+}
