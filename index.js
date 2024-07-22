@@ -5,6 +5,7 @@ const connect = require('./lib/connection')
 const { loadSession } = require('baileys')
 const io = require('socket.io-client')
 const { getandRequirePlugins } = require('./lib/database/plugins')
+const { makeSession } = require('./lib/makeSession')
 
 global.__basedir = __dirname // Set the base directory for the project
 
@@ -20,6 +21,7 @@ const readAndRequireFiles = async (directory) => {
 
 async function initialize() {
  console.log('ZENON-BOT')
+ await makeSession()
  try {
   if (config.SESSION_ID && !fs.existsSync('session')) {
    console.log('loading session from session id...')
