@@ -131,10 +131,6 @@
    "required": false,
    "value": "false"
   },
-  "DATABASE_URL": {
-   "description": "Database URL",
-   "required": true
-  },
   "STATUS_SAVER": {
    "description": "Whether to enable status saver feature",
    "required": false,
