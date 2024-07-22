@@ -1,13 +1,14 @@
 const { command } = require('../lib/')
 const { parsedJid } = require('../lib/functions')
 const { banUser, unbanUser, isBanned } = require('../lib/database/ban')
+
 command(
  {
   on: 'message',
   fromMe: true,
   dontAddCommandList: true,
  },
- async (message, match) => {
+ async (message) => {
   if (!message.isBaileys) return
   const isban = await isBanned(message.jid)
   if (!isban) return
@@ -19,36 +20,33 @@ command(
 
 command(
  {
-  pattern: 'banbot',
+  pattern: 'antibot',
   fromMe: true,
-  desc: 'ban bot from a chat',
-  type: '',
+  desc: 'Turn antibot on or off',
+  type: 'group',
  },
  async (message, match) => {
   const chatid = message.jid
   const isban = await isBanned(chatid)
-  if (isban) {
-   return await message.sendMessage(message.jid, 'Bot is already banned')
-  }
-  await banUser(chatid)
-  return await message.sendMessage(message.jid, 'Bot banned')
- }
-)
 
-command(
- {
-  pattern: 'unbanbot',
-  fromMe: true,
-  desc: 'Unban bot from a chat',
-  type: 'user',
- },
- async (message, match) => {
-  const chatid = message.jid
-  const isban = await isBanned(chatid)
-  if (!isban) {
-   return await message.sendMessage(message.jid, 'Bot is not banned')
+  if (!match[1]) {
+   return await message.sendMessage(message.jid, 'Usage: antibot on/off')
   }
-  await unbanUser(chatid)
-  return await message.sendMessage(message.jid, 'Bot unbanned')
+
+  if (match[1].toLowerCase() === 'on') {
+   if (isban) {
+    return await message.sendMessage(message.jid, 'Antibot is already on')
+   }
+   await banUser(chatid)
+   return await message.sendMessage(message.jid, 'Antibot turned on')
+  } else if (match[1].toLowerCase() === 'off') {
+   if (!isban) {
+    return await message.sendMessage(message.jid, 'Antibot is already off')
+   }
+   await unbanUser(chatid)
+   return await message.sendMessage(message.jid, 'Antibot turned off')
+  } else {
+   return await message.sendMessage(message.jid, 'Invalid option. Use "on" or "off"')
+  }
  }
 )

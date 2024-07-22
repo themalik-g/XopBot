@@ -1,4 +1,4 @@
-const { command, isAdmin, parseJid, isPrivate } = require('../lib/')
+const { command, isAdmin, parseJid, isPrivate } = require('../lib')
 command(
  {
   pattern: 'delttt',

@@ -1,7 +1,7 @@
 const config = require('../config')
-const { command, isPrivate, toAudio } = require('../lib/')
-const { webp2mp4, textToImg } = require('../lib/functions')
-command(
+const { bot, isPrivate, toAudio } = require('../lib/')
+const { textToImg } = require('../lib/functions')
+bot(
  {
   pattern: 'sticker',
   fromMe: isPrivate,
@@ -21,7 +21,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'take',
   fromMe: isPrivate,
@@ -37,7 +37,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'photo',
   fromMe: isPrivate,
@@ -51,7 +51,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'mp3',
   fromMe: isPrivate,
@@ -67,26 +67,7 @@ command(
  }
 )
 
-command(
- {
-  pattern: 'mp4',
-  fromMe: isPrivate,
-  desc: 'converts video/voice to mp4',
-  type: 'downloader',
- },
- async (message, match, m) => {
-  if (!message.reply_message.video || !message.reply_message.sticker || !message.reply_message.audio) return await message.reply('_Reply to a sticker/audio/video_')
-  let buff = await m.quoted.download()
-  if (message.reply_message.sticker) {
-   buff = await webp2mp4(buff)
-  } else {
-   buff = await toAudio(buff, 'mp4')
-  }
-  return await message.sendMessage(message.jid, buff, { mimetype: 'video/mp4' }, 'video')
- }
-)
-
-command(
+bot(
  {
   pattern: 'img',
   fromMe: isPrivate,

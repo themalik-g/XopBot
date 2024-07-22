@@ -1,7 +1,7 @@
-const { command } = require('../lib/plugins')
+const { bot } = require('../lib')
 const { setMessage, getMessage, delMessage, getStatus, toggleStatus } = require('../lib/database').Greetings
 
-command(
+bot(
  {
   pattern: 'welcome',
   fromMe: true,
@@ -49,7 +49,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'goodbye',
   fromMe: true,

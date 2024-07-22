@@ -6,7 +6,7 @@ command(
   pattern: 'trim',
   fromMe: isPrivate,
   desc: 'Trim the video or audio',
-  type: 'user',
+  type: 'misc',
  },
  async (message, match, m) => {
   if (!message.reply_message || (!message.reply_message.video && !message.reply_message.audio)) {

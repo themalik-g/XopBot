@@ -1,6 +1,6 @@
 const config = require('../config')
-const { command, bot } = require('../lib')
-command({ pattern: 'button', fromMe: true, desc: 'send a button message', usage: '#button', type: 'message' }, async (message) => {
+const { bot } = require('../lib')
+bot({ pattern: 'button', fromMe: true, desc: 'send a button message', usage: '#button', type: 'message' }, async (message) => {
  let data = {
   jid: message.jid,
   button: [
