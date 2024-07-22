@@ -4,8 +4,6 @@ const { bot, isPrivate } = require('../lib')
 const gemini = require('../lib/Gemini')
 const { aiImage } = require('../lib/functions')
 const { removeBg } = require('../lib/functions')
-const fs = require('fs-extra')
-
 const fetch = require('node-fetch')
 
 bot(
