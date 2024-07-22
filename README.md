@@ -26,11 +26,12 @@
 -  ✅️ Customizable
 
 
-|# 🌀Functions🌀    | Confirmation |
-|-   Free Deployment|✅️|
-|-   File Conversion|✅️|
-|-   Downloads |✅️|
-|-   Games|✅️|
+| 🌀Functions🌀   | Confirmation |
+------------------|--------------
+|- Free Deployment|✅️|
+|- File Conversion|✅️|
+|-      Downloads |✅️|
+|-           Games|✅️|
 |-   Group Management|✅️|
 |-   Image Processing|✅️|
 |-   Weather Updates|✅️|
@@ -40,3 +41,11 @@
 |-   Integration|✅️|
 |-   Customization|✅️|
 |-   Customizable | ✅️|
+
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 14.x   | :x: |
+| 16.x   | ❗                |
+| 18.x   | :white_check_mark: |
+| 20.x   | ✅                |
