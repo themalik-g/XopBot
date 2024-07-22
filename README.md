@@ -11,7 +11,7 @@
 ##
 
 # 🌀Functions🌀
-
+-  ✅️ Free Deployment
 -  ✅️ *File Conversion*
 -  ✅️ *Downloads*
 -  ✅️ *Games*
@@ -19,9 +19,8 @@
 -  ✅️ *Image Processing*
 -  ✅️ Weather Updates
 -  ✅️ Reminders
--  ✅️Translations
--  ✅️Custom Commands
+-  ✅️ Translations
+-  ✅️ Custom Commands
 -  ✅️ Integration
--  ✅️Deployment and Customization*
--  ✅️Free Deployment
--  ✅️Customizable
+-  ✅️ *Customization*
+-  ✅️ Customizable
