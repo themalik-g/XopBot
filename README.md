@@ -29,3 +29,4 @@
 |-   Customization|✅️|
 |-   Customizable | ✅️|
 
+## SETUP PROCEDURE 
