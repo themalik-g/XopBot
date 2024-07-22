@@ -148,13 +148,5 @@
   {
    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
   }
- ],
- "addons": [
-  {
-   "plan": "heroku-postgresql",
-   "options": {
-    "version": "16"
-   }
-  }
  ]
 }
