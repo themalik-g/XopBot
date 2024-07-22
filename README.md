@@ -34,7 +34,7 @@
 
 
  # ⭐️`Star This Repo`
-Give Zenon-bot a star to show your appreciation and support to our team🌟  appreciation,Support.
+Give Zenon-bot a star to show your appreciation and support 🌟 appreciation,Support.
 
 
 
@@ -42,7 +42,7 @@ Give Zenon-bot a star to show your appreciation and support to our team🌟  app
 ## 🎯 `Installation Procedure` 🎯
 
 
-- FORK THE REPOSITORY 
+
   <a href="https://github.com/EX-BOTS/Zenon-bot/fork" target="_blank">
   <img src="https://img.shields.io/badge/FORK Zenon-bot-black?style=for-the-badge&logo=render" alt="Authenticate With WhatsApp" width="170" height="34">
 </a>
