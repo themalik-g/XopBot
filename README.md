@@ -12,15 +12,15 @@
 
 # 🌀Functions🌀
 -  ✅️ Free Deployment
--  ✅️ *File Conversion*
--  ✅️ *Downloads*
--  ✅️ *Games*
--  ✅️ *Group Management*
--  ✅️ *Image Processing*
+-  ✅️ File Conversion
+-  ✅️ Downloads
+-  ✅️ Games
+-  ✅️ Group Management
+-  ✅️ Image Processing
 -  ✅️ Weather Updates
 -  ✅️ Reminders
 -  ✅️ Translations
 -  ✅️ Custom Commands
 -  ✅️ Integration
--  ✅️ *Customization*
+-  ✅️ Customization
 -  ✅️ Customizable
