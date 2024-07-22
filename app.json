@@ -1,8 +1,8 @@
 {
  "name": "Ex-Bots Zenon Bot",
- "description": "A WhatsApp bot application",
- "repository": "https://github.com/yourusername/your-repo",
- "logo": "https://example.com/your-logo.png",
+ "description": "Simple WhatsApp Bot By EX_BOT_TEAM",
+ "repository": "https://github.com/EX-BOTS/Zenon-bot",
+ "logo": "https://avatars.githubusercontent.com/u/165213524?s=48&v=4",
  "keywords": ["node", "express", "heroku", "whatsapp", "bot"],
  "stack": "container",
  "env": {
