@@ -34,7 +34,7 @@
 
 
  # ⭐️`Star This Repo`
-If you find Zenon-bot helpful, consider giving it a star 🌟 to show your appreciation,Support.
+Give Zenon-bot a star to show your appreciation and support to our team🌟  appreciation,Support.
 
 
 
