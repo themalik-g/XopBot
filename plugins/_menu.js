@@ -38,15 +38,13 @@ Description: ${command.desc}\`\`\``)
   } else {
    let [date, time] = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }).split(',')
    let menuHeader = `╭═══ ${BOT_NAME} ═══⊷
-┃✵╭──────────────
-┃✵│ User: ${message.pushName}
-┃✵│ OS: ${os.platform}
-┃✵│ Platform: ${hostname().split('-')[0]}
-┃✵│ Date: ${date}
-┃✵│ Time: ${time}
-┃✵│ Plugins: ${plugins.commands.length}
-┃✵│ Uptime: ${formatRuntime(process.uptime())} 
-┃✵╰──────────────
+│ ᴜsᴇʀ: ${message.pushName}
+│ ᴏs: ${os.platform}
+│ ᴘʟᴀᴛғᴏʀᴍ: ${hostname().split('-')[0]}
+│ ᴅᴀᴛᴇ: ${date}
+│ ᴛɪᴍᴇ: ${time}
+│ ᴘʟᴜɢɪɴs: ${plugins.commands.length}
+│ ʀᴜɴᴛɪᴍᴇ: ${formatRuntime(process.uptime())} 
 ╰━━━━━━━━━━━━━━━┈⊷\n`
 
    let commandList = []
