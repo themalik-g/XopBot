@@ -219,3 +219,71 @@ bot(
   await message.client.groupSettingUpdate(message.jid, 'unlocked')
  }
 )
+
+bot(
+ {
+  pattern: 'requests',
+  fromMe: true,
+  desc: 'View Group Join Requests',
+  type: 'group',
+ },
+ async (message) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+  const requests = await message.client.groupRequestParticipantsList(message.jid)
+  if (!requests || requests.length === 0) {
+   return await message.reply('_No Requests Yet_')
+  }
+  let requestList = '_Join Requests_\n\n'
+  for (const request of requests) {
+   requestList += `@${request.jid.split('@')[0]}\n`
+  }
+  await message.reply(requestList, { mentions: requests.map((r) => r.jid) })
+ }
+)
+
+bot(
+ {
+  pattern: 'accept',
+  fromMe: true,
+  desc: 'Accept Group Join Requests',
+  type: 'group',
+ },
+ async (message) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+  const requests = await message.client.groupRequestParticipantsList(message.chat)
+  if (!requests || requests.length === 0) {
+   return await message.reply('No Join Requests Yet.')
+  }
+  let acceptedList = 'List of accepted users\n\n'
+  for (const request of requests) {
+   await message.client.groupRequestParticipantsUpdate(message.jid, [request.jid], 'approve')
+   acceptedList += `@${request.jid.split('@')[0]}\n`
+  }
+  await message.reply(acceptedList, { mentions: requests.map((r) => r.jid) })
+ }
+)
+
+bot(
+ {
+  pattern: 'reject',
+  fromMe: true,
+  desc: 'Reject Group Join Requests',
+  type: 'group',
+ },
+ async (message) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+  const requests = await message.client.groupRequestParticipantsList(message.chat)
+  if (!requests || requests.length === 0) {
+   return await message.reply('No Join Requests Yet.')
+  }
+  let rejectedList = 'List of rejected users\n\n'
+  for (const request of requests) {
+   await message.client.groupRequestParticipantsUpdate(message.jid, [request.jid], 'reject')
+   rejectedList += `@${request.jid.split('@')[0]}\n`
+  }
+  await message.reply(rejectedList, { mentions: requests.map((r) => r.jid) })
+ }
+)

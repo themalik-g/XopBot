@@ -18,34 +18,3 @@ command({ pattern: 'button', fromMe: true, desc: 'send a button message', usage:
  }
  return await message.sendMessage(message.jid, data, {}, 'interactive')
 })
-
-bot(
- {
-  pattern: 'groups',
-  fromMe: true,
-  desc: 'Sends Group Commands As Button',
-  type: 'groups',
- },
- async (message) => {
-  let groupData = {
-   jid: message.jid,
-   button: [
-    { type: 'list', 
-        params: 
-        { title: 'Group',
-             sections: [
-            { title: 'Group Commands', rows: [
-                { header: 'title', title: 'Button 1', description: 'Description 1', id: ''+config.HANDLERS+'promote' }
-            ] 
-        }
-    ] 
-} 
-}
-],
-   header: { title: 'Zenon Group Commands', subtitle: 'EX_BOT_TEAM', hasMediaAttachment: false },
-   footer: { text: 'Copy Right EX BOT Team' },
-   body: { text: 'Group List' },
-  }
-  return await message.sendMessage(message.jid, groupData, {}, 'interactive')
- }
-)
