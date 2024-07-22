@@ -10,40 +10,20 @@
 ---
 ##
 
-### Zenon-bot Functionalities
+# 🌀Functions🌀
 
-1. *File Conversion*
-   - Document to PDF
-   - Image to Text (OCR)
-   - Audio to Text
-
-2. *Downloads*
-   - Video Downloading
-   - Music Downloading
-   - File Downloading
-
-3. *Games*
-   - Trivia Quizzes
-   - Puzzles
-   - Mini-games
-
-4. *Group Management*
-   - Moderation
-   - User Management
-   - Announcements
-
-5. *Image Processing*
-   - Filters
-   - Resizing
-   - Editing
-
-6. *Other Functionalities*
+-  ✅️ *File Conversion*
+-  ✅️ *Downloads*
+-  ✅️ *Games*
+-  ✅️ *Group Management*
+-  ✅️ *Image Processing*
+-  ✅️ *Other Functionalities*
    - Weather Updates
    - Reminders
    - Translations
    - Custom Commands
    - Integration
 
-7. *Deployment and Customization*
+-  ✅️b*Deployment and Customization*
    - Free Deployment
    - Customizable
