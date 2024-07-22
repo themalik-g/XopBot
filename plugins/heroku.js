@@ -4,12 +4,15 @@ const { bot } = require('../lib/')
 const Config = require('../config')
 const heroku = new Heroku({ token: Config.HEROKU_API_KEY })
 const { secondsToDHMS } = require('../lib/functions')
-async function checkHerokuConfig(message) {
- if (!Config.HEROKU) return await message.reply('You are not using Heroku as your server.')
- if (Config.HEROKU_APP_NAME === '') return await message.reply('Add `HEROKU_APP_NAME` env variable')
- if (Config.HEROKU_API_KEY === '') return await message.reply('Add `HEROKU_API_KEY` env variable')
+
+function checkHerokuConfig(message) {
+ if (!Config.HEROKU || !Config.HEROKU_APP_NAME || !Config.HEROKU_API_KEY) {
+  message.reply('Your Heroku is not configured properly')
+  return false
+ }
  return true
 }
+
 bot(
  {
   pattern: 'dyno',
@@ -18,37 +21,24 @@ bot(
   type: 'heroku',
  },
  async (message) => {
-  if (!Config.HEROKU) return await message.reply('You are not using Heroku as your server.')
+  if (!checkHerokuConfig(message)) return
 
-  if (Config.HEROKU_APP_NAME === '') return await message.reply('Add `HEROKU_APP_NAME` env variable')
-  if (Config.HEROKU_API_KEY === '') return await message.reply('Add `HEROKU_API_KEY env variable')
-
-  try {
-   heroku
-    .get('/account')
-    .then(async (account) => {
-     const url = `https://api.heroku.com/accounts/${account.id}/actions/get-quota`
-     headers = {
-      'User-Agent': 'Chrome/80.0.3987.149 Mobile Safari/537.36',
-      Authorization: 'Bearer ' + Config.HEROKU_API_KEY,
-      Accept: 'application/vnd.heroku+json; version=3.account-quotas',
-     }
-     const res = await got(url, { headers })
-     const resp = JSON.parse(res.body)
-     const total_quota = Math.floor(resp.account_quota)
-     const quota_used = Math.floor(resp.quota_used)
-     const remaining = total_quota - quota_used
-     const quota = `Total Quota : ${secondsToDHMS(total_quota)}
+  const account = await heroku.get('/account')
+  const url = `https://api.heroku.com/accounts/${account.id}/actions/get-quota`
+  const headers = {
+   'User-Agent': 'Chrome/80.0.3987.149 Mobile Safari/537.36',
+   Authorization: 'Bearer ' + Config.HEROKU_API_KEY,
+   Accept: 'application/vnd.heroku+json; version=3.account-quotas',
+  }
+  const res = await got(url, { headers })
+  const resp = JSON.parse(res.body)
+  const total_quota = Math.floor(resp.account_quota)
+  const quota_used = Math.floor(resp.quota_used)
+  const remaining = total_quota - quota_used
+  const quota = `Total Quota : ${secondsToDHMS(total_quota)}
 Used  Quota : ${secondsToDHMS(quota_used)}
 Remaning    : ${secondsToDHMS(remaining)}`
-     await message.reply('```' + quota + '```')
-    })
-    .catch(async (error) => {
-     return await message.reply(`HEROKU : ${error.body.message}`)
-    })
-  } catch (error) {
-   await message.reply(error)
-  }
+  await message.reply('```' + quota + '```')
  }
 )
 
@@ -60,22 +50,19 @@ bot(
   type: 'heroku',
  },
  async (message, match) => {
-  if (!(await checkHerokuConfig(message))) return
+  if (!checkHerokuConfig(message)) return
+  if (!match[1]) {
+   await message.reply('Please specify a variable name')
+   return
+  }
 
-  const varName = match[1]
-  if (!varName) return await message.reply('Please specify a variable name')
+  const app = await heroku.get(`/apps/${Config.HEROKU_APP_NAME}`)
+  const config = await heroku.get(`/apps/${app.id}/config-vars`)
 
-  try {
-   const app = await heroku.get(`/apps/${Config.HEROKU_APP_NAME}`)
-   const config = await heroku.get(`/apps/${app.id}/config-vars`)
-
-   if (varName in config) {
-    await message.reply(`${varName}: ${config[varName]}`)
-   } else {
-    await message.reply(`Variable ${varName} not found`)
-   }
-  } catch (error) {
-   await message.reply(`Error: ${error.message}`)
+  if (match[1] in config) {
+   await message.reply(`${match[1]}: ${config[match[1]]}`)
+  } else {
+   await message.reply(`Variable ${match[1]} not found`)
   }
  }
 )
@@ -88,91 +75,80 @@ bot(
   type: 'heroku',
  },
  async (message, match) => {
-  if (!(await checkHerokuConfig(message))) return
+  if (!checkHerokuConfig(message)) return
 
   const [varName, varValue] = match[1].split('=').map((item) => item.trim())
-  if (!varName || !varValue) return await message.reply('Usage: setvar NAME=VALUE')
-
-  try {
-   await heroku.patch(`/apps/${Config.HEROKU_APP_NAME}/config-vars`, {
-    body: {
-     [varName]: varValue,
-    },
-   })
-   await message.reply(`Variable ${varName} set to ${varValue}`)
-  } catch (error) {
-   await message.reply(`Error: ${error.message}`)
+  if (!varName || !varValue) {
+   await message.reply('Usage: setvar NAME=VALUE')
+   return
   }
+
+  await heroku.patch(`/apps/${Config.HEROKU_APP_NAME}/config-vars`, {
+   body: {
+    [varName]: varValue,
+   },
+  })
+  await message.reply(`Variable ${varName} set to ${varValue}`)
  }
 )
 
 bot(
  {
-  pattern: 'removevar',
+  pattern: 'delvar',
   fromMe: true,
   desc: 'Remove an environment variable',
   type: 'heroku',
  },
  async (message, match) => {
-  if (!(await checkHerokuConfig(message))) return
-
-  const varName = match[1]
-  if (!varName) return await message.reply('Please specify a variable name to remove')
-
-  try {
-   await heroku.patch(`/apps/${Config.HEROKU_APP_NAME}/config-vars`, {
-    body: {
-     [varName]: null,
-    },
-   })
-   await message.reply(`Variable ${varName} removed`)
-  } catch (error) {
-   await message.reply(`Error: ${error.message}`)
+  if (!checkHerokuConfig(message)) return
+  if (!match[1]) {
+   await message.reply('Please specify a variable name to remove')
+   return
   }
+
+  await heroku.patch(`/apps/${Config.HEROKU_APP_NAME}/config-vars`, {
+   body: {
+    [match[1]]: null,
+   },
+  })
+  await message.reply(`Variable ${match[1]} removed`)
  }
 )
 
 bot(
  {
-  pattern: 'listvars',
+  pattern: 'allvars',
   fromMe: true,
   desc: 'List all environment variables',
   type: 'heroku',
  },
  async (message) => {
-  if (!(await checkHerokuConfig(message))) return
+  if (!checkHerokuConfig(message)) return
 
-  try {
-   const app = await heroku.get(`/apps/${Config.HEROKU_APP_NAME}`)
-   const config = await heroku.get(`/apps/${app.id}/config-vars`)
+  const app = await heroku.get(`/apps/${Config.HEROKU_APP_NAME}`)
+  const config = await heroku.get(`/apps/${app.id}/config-vars`)
 
-   let varList = 'Environment Variables:\n'
-   for (const [key, value] of Object.entries(config)) {
-    varList += `${key}: ${value}\n`
-   }
-
-   await message.reply(varList)
-  } catch (error) {
-   await message.reply(`Error: ${error.message}`)
+  let varList = 'Environment Variables:\n'
+  for (const [key, value] of Object.entries(config)) {
+   varList += `${key}: ${value}\n`
   }
+
+  await message.reply(varList)
  }
 )
+
 bot(
  {
-  pattern: 'dynorestart',
+  pattern: 'dynor',
   fromMe: true,
   desc: 'Restart the Heroku dyno',
   type: 'heroku',
  },
  async (message) => {
-  if (!(await checkHerokuConfig(message))) return
+  if (!checkHerokuConfig(message)) return
 
-  try {
-   await message.reply('Restarting dyno...')
-   await heroku.delete(`/apps/${Config.HEROKU_APP_NAME}/dynos`)
-   await message.reply('Dyno restarted successfully')
-  } catch (error) {
-   await message.reply(`Error: ${error.message}`)
-  }
+  await message.reply('Restarting dyno...')
+  await heroku.delete(`/apps/${Config.HEROKU_APP_NAME}/dynos`)
+  await message.reply('Dyno restarted successfully')
  }
 )
