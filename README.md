@@ -24,3 +24,19 @@
 -  ✅️ Integration
 -  ✅️ Customization
 -  ✅️ Customizable
+
+
+|# 🌀Functions🌀    | Confirmation |
+|-   Free Deployment|✅️|
+|-   File Conversion|✅️|
+|-   Downloads |✅️|
+|-   Games|✅️|
+|-   Group Management|✅️|
+|-   Image Processing|✅️|
+|-   Weather Updates|✅️|
+|-   Reminders|✅️|
+|-   Translations|✅️|
+|-   Custom Commands|✅️|
+|-   Integration|✅️|
+|-   Customization|✅️|
+|-   Customizable | ✅️|
