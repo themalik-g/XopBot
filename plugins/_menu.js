@@ -4,6 +4,7 @@ const { BOT_NAME } = require('../config')
 const { hostname } = require('os')
 const os = require('os')
 const { tiny } = require('../lib/fancy')
+const config = require('../config')
 
 function formatRuntime(totalSeconds, dayLabel = ' d', hourLabel = ' h', minuteLabel = ' m', secondLabel = ' s') {
  totalSeconds = Number(totalSeconds)
@@ -36,7 +37,7 @@ Description: ${command.desc}\`\`\``)
     }
    }
   } else {
-   let [date, time] = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }).split(',')
+   const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
    let menuHeader = `╭═══ ${BOT_NAME} ═══⊷
 │ ᴜsᴇʀ: ${message.pushName}
 │ ᴏs: ${os.platform}

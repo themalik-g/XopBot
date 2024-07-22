@@ -11,6 +11,7 @@ module.exports = {
  BOT_NAME: process.env.BOT_NAME || 'Zenon-bot',
  SUDO: process.env.SUDO || '2348039607375,2349027862116,2347089816866,2349054039891,2347045035241',
  WORK_TYPE: process.env.WORK_TYPE || 'private',
+ TIME_ZONE: process.env.TZ || 'Africa/Lagos',
  HANDLERS: process.env.HANDLER === 'false' || process.env.HANDLER === 'null' ? '^' : '[#]',
  ANTILINK: toBool(process.env.ANTI_LINK) || false,
  LOGS: toBool(process.env.LOGS) || true,
