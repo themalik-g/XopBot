@@ -1,5 +1,5 @@
 const plugins = require('../lib/plugins')
-const { bot, isPrivate, clockString } = require('../lib')
+const { bot, isPrivate } = require('../lib')
 const { BOT_NAME } = require('../config')
 const { hostname } = require('os')
 const os = require('os')
@@ -18,7 +18,7 @@ function formatRuntime(totalSeconds, dayLabel = ' d', hourLabel = ' h', minuteLa
  const secondPart = seconds > 0 ? seconds + secondLabel : ''
  return dayPart + hourPart + minutePart + secondPart
 }
-
+module.exports = formatRuntime
 bot(
  {
   pattern: 'menu',

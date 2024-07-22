@@ -1,5 +1,6 @@
 const { bot, isPrivate } = require('../lib')
 const { exec } = require('child_process')
+const formatRuntime = require('./_menu')
 function executeCommand(command) {
  return new Promise((resolve, reject) => {
   exec(command, (error, stdout, stderr) => {
@@ -147,6 +148,6 @@ bot(
   type: 'user',
  },
  async (message) => {
-  message.reply(`${secondsToDHMS(process.uptime())}`)
+  message.reply(`${formatRuntime(process.uptime())}`)
  }
 )
