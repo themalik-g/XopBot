@@ -20,7 +20,7 @@
 |-      Downloads |✅️|
 |-           Games|✅️|
 |-   Group Management|✅️|
-|-   Image Processing|✅️|
+|-   Image features|✅️|
 |-   Weather Updates|✅️|
 |-   Reminders|✅️|
 |-   Translations|✅️|
