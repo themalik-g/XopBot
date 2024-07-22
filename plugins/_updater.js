@@ -11,7 +11,7 @@ bot(
   let commits = await sys.syncGit()
   if (commits.total === 0) return await message.reply(`_Bot is UptoDate_`)
   let update = await sys.sync()
-  await message.reply(update)
+  await message.reply(`${update}`)
 
   if (match == 'redeploy' && process.env.HEROKU_APP_NAME && process.env.HEROKU_API_KEY) {
    await message.reply('_Redeploying Bot, this may take a while!_')
