@@ -31,7 +31,23 @@
 
 ## SETUP PROCEDURE 
 
-- 
+
+
+  ⭐️`Star This Repo`
+If you find Zenon-bot helpful, consider giving it a star 🌟 to show your appreciation,Support.
+
+
+
+
+## 🛠️ `Installation Procedure` 🛠
+
+
+❏FORK THE REPOSITORY 
+  <a href="https://github.com/EX-BOTS/Zenon-bot/fork" target="_blank">
+  <img src="https://img.shields.io/badge/FORK STAR-black?style=for-the-badge&logo=render" alt="Authenticate With WhatsApp" width="170" height="34">
+</a>
+
+
 
 
 
