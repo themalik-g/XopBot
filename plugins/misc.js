@@ -1,7 +1,7 @@
 const { fromBuffer } = require('file-type')
-const { command, isPrivate } = require('../lib/')
+const { bot, isPrivate } = require('../lib/')
 const { ffmpeg, parseTimeToSeconds } = require('../lib/functions')
-command(
+bot(
  {
   pattern: 'trim',
   fromMe: isPrivate,
@@ -24,5 +24,23 @@ command(
   const args = ['-ss', `${startSeconds}`, '-t', `${duration}`, '-c', 'copy']
   const trimmedBuffer = await ffmpeg(buffer, args, ext, ext)
   message.sendFile(trimmedBuffer)
+ }
+)
+bot(
+ {
+  pattern: 'readmore',
+  desc: 'Creates a readmore Text Message.',
+  category: 'misc',
+ },
+ async (message, text) => {
+  if (!text) {
+   text = '_Provide Text With Commas_'
+  } else {
+   text += ' '
+  }
+  const readMoreChar = String.fromCharCode(8206).repeat(4001)
+  const result = text.includes('readmore') ? text.replace(/readmore/, readMoreChar) : text.replace(' ', readMoreChar)
+
+  await message.reply(result)
  }
 )

@@ -4,12 +4,39 @@ const { bot, isPrivate } = require('../lib')
 const gemini = require('../lib/Gemini')
 const { aiImage } = require('../lib/functions')
 const { removeBg } = require('../lib/functions')
+const fs = require('fs-extra')
+
+const fetch = require('node-fetch')
+
+bot(
+ {
+  pattern: 'gpt',
+  desc: 'chat with an AI',
+  type: 'ai',
+ },
+ async (message, query) => {
+  if (!query) {
+   return message.reply("Provide me a query, e.g., 'What is Life?'")
+  }
+  try {
+   const response = await fetch(`https://api.maher-zubair.tech/ai/chatgpt2?q=${encodeURIComponent(query)}`)
+   const data = await response.json()
+   if (data && data.status === 200 && data.result) {
+    return await message.reply(data.result)
+   } else {
+    return message.reply('*_Error while getting GPT response!!_*')
+   }
+  } catch (error) {
+   console.error('Error fetching from api.maher-zubair.tech:', error)
+  }
+ }
+)
 bot(
  {
   pattern: 'gemini',
   fromMe: isPrivate,
   desc: 'Generate text with gemini',
-  type: 'ai'
+  type: 'ai',
  },
  async (message, match, m) => {
   match = match || message.reply_message.text
