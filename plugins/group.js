@@ -1,5 +1,5 @@
-const { command, isAdmin, parsedJid } = require('../lib')
-command(
+const { bot, isAdmin, parsedJid } = require('../lib')
+bot(
  {
   pattern: 'add',
   fromMe: true,
@@ -25,7 +25,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'kick',
   fromMe: true,
@@ -50,7 +50,7 @@ command(
   })
  }
 )
-command(
+bot(
  {
   pattern: 'promote',
   fromMe: true,
@@ -75,7 +75,7 @@ command(
   })
  }
 )
-command(
+bot(
  {
   pattern: 'demote',
   fromMe: true,
@@ -101,7 +101,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'mute',
   fromMe: true,
@@ -116,7 +116,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'unmute',
   fromMe: true,
@@ -131,7 +131,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'gjid',
   fromMe: true,
@@ -151,7 +151,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'tagall',
   fromMe: true,
@@ -171,7 +171,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'tag',
   fromMe: true,
@@ -187,5 +187,35 @@ command(
   message.sendMessage(message.jid, match, {
    mentions: participants.map((a) => a.id),
   })
+ }
+)
+
+bot(
+ {
+  pattern: 'lock',
+  fromMe: true,
+  desc: 'Allows Only Admins to Edit Gc Settings',
+  type: 'group',
+ },
+ async (message, match) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+  await message.reply('_Locking Group_')
+  await message.client.groupSettingUpdate(message.jid, 'locked')
+ }
+)
+
+bot(
+ {
+  pattern: 'unlock',
+  fromMe: true,
+  desc: 'Allows All Members To Edit Gc Settings',
+  type: 'group',
+ },
+ async (message, match) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+  await message.reply('_Unlocking Group_')
+  await message.client.groupSettingUpdate(message.jid, 'unlocked')
  }
 )
