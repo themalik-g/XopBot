@@ -1,0 +1,160 @@
+{
+ "name": "Ex-Bots Zenon Bot",
+ "description": "A WhatsApp bot application",
+ "repository": "https://github.com/yourusername/your-repo",
+ "logo": "https://example.com/your-logo.png",
+ "keywords": ["node", "express", "heroku", "whatsapp", "bot"],
+ "stack": "container",
+ "env": {
+  "SESSION_ID": {
+   "description": "A unique session identifier",
+   "required": true,
+   "value": ""
+  },
+  "SESSION_FLUSH": {
+   "description": "Whether to flush the session",
+   "required": false,
+   "value": "false"
+  },
+  "OWNER_NAME": {
+   "description": "Name of the bot owner",
+   "required": false,
+   "value": "ᴇx-ʙᴏᴛs"
+  },
+  "BOT_NAME": {
+   "description": "Name of the bot",
+   "required": false,
+   "value": "ᴢᴇɴᴏɴ-ʙᴏᴛ"
+  },
+  "SUDO": {
+   "description": "Sudo users' phone numbers",
+   "required": false,
+   "value": "2348039607375,2349027862116,2347089816866,2349054039891,2347045035241"
+  },
+  "WORK_TYPE": {
+   "description": "Work type of the bot",
+   "required": false,
+   "value": "private"
+  },
+  "TZ": {
+   "description": "Timezone",
+   "required": false,
+   "value": "Africa/Lagos"
+  },
+  "HANDLER": {
+   "description": "Command handler prefix",
+   "required": false,
+   "value": "[#]"
+  },
+  "ANTI_LINK": {
+   "description": "Whether to enable anti-link feature",
+   "required": false,
+   "value": "false"
+  },
+  "LOGS": {
+   "description": "Whether to enable logs",
+   "required": false,
+   "value": "true"
+  },
+  "LANG": {
+   "description": "Language setting",
+   "required": false,
+   "value": "EN"
+  },
+  "RMBG_KEY": {
+   "description": "RemoveBG API key",
+   "required": false
+  },
+  "PACKNAME": {
+   "description": "Sticker pack name",
+   "required": false,
+   "value": "ᴇx-ʙᴏᴛs"
+  },
+  "WELCOME_MSG": {
+   "description": "Welcome message",
+   "required": false,
+   "value": "Hi @user Welcome to @gname"
+  },
+  "GOODBYE_MSG": {
+   "description": "Goodbye message",
+   "required": false,
+   "value": "Hi @user It was Nice Seeing you"
+  },
+  "AUTHOR": {
+   "description": "Author name",
+   "required": false,
+   "value": "ᴇx-ʙᴏᴛs"
+  },
+  "HEROKU_APP_NAME": {
+   "description": "Heroku app name",
+   "required": false
+  },
+  "HEROKU_API_KEY": {
+   "description": "Heroku API key",
+   "required": false
+  },
+  "HEROKU": {
+   "description": "Whether the app is running on Heroku",
+   "required": false,
+   "value": "false"
+  },
+  "AUTO_READ": {
+   "description": "Whether to enable auto-read messages",
+   "required": false,
+   "value": "false"
+  },
+  "AUTO_STATUS_READ": {
+   "description": "Whether to enable auto-read status",
+   "required": false,
+   "value": "false"
+  },
+  "PROCESSNAME": {
+   "description": "Process name",
+   "required": false,
+   "value": "ᴇx-ʙᴏᴛs"
+  },
+  "SESSION_URL": {
+   "description": "Session URL",
+   "required": false
+  },
+  "DELETED_LOG": {
+   "description": "Whether to log deleted messages",
+   "required": false,
+   "value": "false"
+  },
+  "DELETED_LOG_CHAT": {
+   "description": "Chat to log deleted messages",
+   "required": false
+  },
+  "REMOVEBG": {
+   "description": "Whether to enable background removal feature",
+   "required": false,
+   "value": "false"
+  },
+  "DATABASE_URL": {
+   "description": "Database URL",
+   "required": true
+  },
+  "STATUS_SAVER": {
+   "description": "Whether to enable status saver feature",
+   "required": false,
+   "value": "true"
+  }
+ },
+ "buildpacks": [
+  {
+   "url": "heroku/nodejs"
+  },
+  {
+   "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+  }
+ ],
+ "addons": [
+  {
+   "plan": "heroku-postgresql",
+   "options": {
+    "version": "13"
+   }
+  }
+ ]
+}
