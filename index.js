@@ -1,4 +1,4 @@
-const fs = require('fs').promises
+const fs = require('fs').promises // Use promises API for async operations
 const path = require('path')
 const config = require('./config')
 const connect = require('./lib/connection')
@@ -23,11 +23,17 @@ async function initialize() {
  console.log('ZENON-BOT')
  await makeSession()
  try {
-  if (config.SESSION_ID && !fs.existsSync('session')) {
-   console.log('loading session from session id...')
-   fs.mkdirSync('./lib/auth')
+  if (
+   config.SESSION_ID &&
+   !(await fs
+    .access('session')
+    .then(() => false)
+    .catch(() => true))
+  ) {
+   console.log('Loading session from session id...')
+   await fs.mkdir('./lib/auth', { recursive: true }) // Create directory if it doesn't exist
    const credsData = await loadSession(config.SESSION_ID)
-   fs.writeFileSync('./lib/auth/creds.json', JSON.stringify(credsData.creds, null, 2))
+   await fs.writeFile('./lib/auth/creds.json', JSON.stringify(credsData.creds, null, 2))
   }
   await readAndRequireFiles(path.join(__dirname, '/lib/database/'))
   console.log('Syncing Database')
@@ -38,13 +44,15 @@ async function initialize() {
   await readAndRequireFiles(path.join(__dirname, '/plugins/'))
   await getandRequirePlugins()
   console.log('✅ Plugins Installed!')
+
   const ws = io('https://socket.xasena.me/', { reconnection: true })
   ws.on('connect', () => console.log('Connected to server'))
   ws.on('disconnect', () => console.log('Disconnected from server'))
+
   return await connect()
  } catch (error) {
   console.error('Initialization error:', error)
-  return process.exit(1) // Exit with error status
+  process.exit(1) // Exit with error status
  }
 }
 
