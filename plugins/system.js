@@ -148,6 +148,6 @@ bot(
   type: 'user',
  },
  async (message) => {
-  message.reply(`> *Alive Since: ${formatRuntime(process.uptime())}`)
+  message.reply(`> *_Alive Since: ${formatRuntime(process.uptime())}_*`)
  }
 )
