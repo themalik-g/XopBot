@@ -1,9 +1,9 @@
-const { bot } = require('../lib')
+const { bot, isPrivate } = require('../lib')
 const sys = require('../lib/updater')
 bot(
  {
   pattern: 'isupdate',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Get Update From Devs',
   type: 'updater',
  },
@@ -23,7 +23,7 @@ bot(
 bot(
  {
   pattern: 'update',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Update Your Bot Now!',
   type: 'updater',
  },
@@ -34,7 +34,7 @@ bot(
   let text = `> Updated Started\n\n${update}`
   await message.bot.sendMessage(message.jid, { text })
   await require('simple-git')().reset('hard', ['HEAD'])
-  await require('simple-git')().pull()
+  await require('simple-git')().pull('origin', 'master')
   await message.reply(`_Bot Updated, Restart Now!_`)
  }
 )
