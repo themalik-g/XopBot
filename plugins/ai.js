@@ -1,14 +1,15 @@
 const fs = require('fs')
 const config = require('../config')
-const { bot } = require('../lib')
+const { bot, isPrivate } = require('../lib')
 const gemini = require('../lib/Gemini')
 const { aiImage } = require('../lib/functions')
 const { removeBg } = require('../lib/functions')
 bot(
  {
   pattern: 'gemini',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Generate text with gemini',
+  type: 'ai'
  },
  async (message, match, m) => {
   match = match || message.reply_message.text
@@ -35,7 +36,7 @@ bot(
   pattern: 'genimg',
   fromMe: isPrivate,
   desc: 'Generate image from text',
-  type: 'image',
+  type: 'ai',
  },
  async (message, match) => {
   match = match || message.reply_message.text

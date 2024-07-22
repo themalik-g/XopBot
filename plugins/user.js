@@ -1,7 +1,6 @@
 const { bot, parsedJid } = require('../lib')
 const { PausedChats, WarnDB } = require('../lib/database')
 const { WARN_COUNT } = require('../config')
-const { secondsToDHMS } = require('../lib/functions')
 const { saveWarn, resetWarn } = WarnDB
 
 bot(
@@ -90,17 +89,5 @@ bot(
   return await message.reply(`_Warnings for @${userId.split('@')[0]} reset_`, {
    mentions: [userId],
   })
- }
-)
-
-bot(
- {
-  pattern: 'uptime',
-  fromMe: true,
-  desc: 'Check uptime of bot',
-  type: 'user',
- },
- async (message, match) => {
-  message.reply(`*Uptime:* ${secondsToDHMS(process.uptime())}`)
  }
 )

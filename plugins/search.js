@@ -1,4 +1,4 @@
-const { bot, getLyrics } = require('../lib')
+const { bot, getLyrics, isPrivate } = require('../lib')
 
 bot(
  {

@@ -1,4 +1,4 @@
-const { bot } = require('../lib')
+const { bot, isPrivate } = require('../lib')
 const { exec } = require('child_process')
 function executeCommand(command) {
  return new Promise((resolve, reject) => {
@@ -24,16 +24,16 @@ bot(
  },
  async (message, match) => {
   const start = new Date().getTime()
-  await message.sendMessage(message.jid, '```Ping!```')
+  await message.sendMessage(message.jid, '```Server Check!```')
   const end = new Date().getTime()
-  return await message.sendMessage(message.jid, '*Pong!*\n ```' + (end - start) + '``` *ms*')
+  return await message.sendMessage(message.jid, '*Pong!*\n ```Latency' + (end - start) + '``` *ms*')
  }
 )
 
 bot(
  {
   pattern: 'shutdown',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Shutdown the bot server',
   type: 'system',
  },
@@ -46,7 +46,7 @@ bot(
 bot(
  {
   pattern: 'restart',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Restart the bot server',
   type: 'system',
  },
@@ -66,7 +66,7 @@ bot(
 bot(
  {
   pattern: 'console ?(.*)',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'Execute a command on the server console',
   type: 'system',
  },
@@ -87,8 +87,8 @@ bot(
 
 bot(
  {
-  pattern: 'sysinfo',
-  fromMe: true,
+  pattern: 'sysinfo ?(.*)',
+  fromMe: isPrivate,
   desc: 'Get system information',
   type: 'system',
  },
@@ -104,16 +104,16 @@ bot(
     heapUsed: `${Math.round((memoryUsage.heapUsed / 1024 / 1024) * 100) / 100} MB`,
    }
 
-   const sysInfo = `System Information:
-• Node.js Version: ${process.version}
-• Platform: ${process.platform}
-• Architecture: ${process.arch}
-• PID: ${process.pid}
-• Uptime: ${uptimeFormatted}
-• Memory Usage:
-  - RSS: ${memoryFormatted.rss}
-  - Heap Total: ${memoryFormatted.heapTotal}
-  - Heap Used: ${memoryFormatted.heapUsed}`
+   const sysInfo = `*_Server Specs_*
+\t \`\`\` Node.js Version: ${process.version} \`\`\`
+> Platform: ${process.platform}
+> Architecture: ${process.arch}
+> PID: ${process.pid}
+> Uptime: ${uptimeFormatted}
+> Memory Usage:
+> RSS: ${memoryFormatted.rss}
+> Heap Total: ${memoryFormatted.heapTotal}
+> Heap Used: ${memoryFormatted.heapUsed}`
 
    await message.reply(sysInfo)
   } catch (error) {
@@ -125,7 +125,7 @@ bot(
 bot(
  {
   pattern: 'processes',
-  fromMe: true,
+  fromMe: isPrivate,
   desc: 'List all running processes',
   type: 'system',
  },
@@ -137,5 +137,16 @@ bot(
   } catch (error) {
    await message.reply(`Failed to retrieve process list: ${error}`)
   }
+ }
+)
+bot(
+ {
+  pattern: 'runtime ?(.*)',
+  fromMe: isPrivate,
+  desc: 'Check uptime of bot',
+  type: 'user',
+ },
+ async (message) => {
+  message.reply(`${secondsToDHMS(process.uptime())}`)
  }
 )
