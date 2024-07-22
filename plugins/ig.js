@@ -1,5 +1,5 @@
 const { bot, getUrl, isIgUrl, isPrivate } = require('../lib/')
-const insta = require('../mods/index')
+const insta = require('../mods/instagram')
 
 bot(
  {
