@@ -17,8 +17,7 @@
 -  ✅️ *Games*
 -  ✅️ *Group Management*
 -  ✅️ *Image Processing*
--  ✅️ *Other Functionalities*
-   - Weather Updates
+-  ✅️ Weather Updates
    - Reminders
    - Translations
    - Custom Commands
