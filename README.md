@@ -10,23 +10,9 @@
 ---
 ##
 
-# 🌀Functions🌀
--  ✅️ Free Deployment
--  ✅️ File Conversion
--  ✅️ Downloads
--  ✅️ Games
--  ✅️ Group Management
--  ✅️ Image Processing
--  ✅️ Weather Updates
--  ✅️ Reminders
--  ✅️ Translations
--  ✅️ Custom Commands
--  ✅️ Integration
--  ✅️ Customization
--  ✅️ Customizable
 
 
-| 🌀Functions🌀   | Confirmation |
+| Function   | Confirmation |
 ------------------|--------------
 |- Free Deployment|✅️|
 |- File Conversion|✅️|
@@ -42,10 +28,3 @@
 |-   Customization|✅️|
 |-   Customizable | ✅️|
 
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 14.x   | :x: |
-| 16.x   | ❗                |
-| 18.x   | :white_check_mark: |
-| 20.x   | ✅                |
