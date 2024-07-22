@@ -4,6 +4,20 @@ const { BOT_NAME } = require('../config')
 const { hostname } = require('os')
 const os = require('os')
 const { tiny } = require('../lib/fancy')
+
+function formatRuntime(totalSeconds, dayLabel = ' d', hourLabel = ' h', minuteLabel = ' m', secondLabel = ' s') {
+ totalSeconds = Number(totalSeconds)
+ const days = Math.floor(totalSeconds / 86400)
+ const hours = Math.floor((totalSeconds % 86400) / 3600)
+ const minutes = Math.floor((totalSeconds % 3600) / 60)
+ const seconds = Math.floor(totalSeconds % 60)
+ const dayPart = days > 0 ? days + dayLabel + ', ' : ''
+ const hourPart = hours > 0 ? hours + hourLabel + ', ' : ''
+ const minutePart = minutes > 0 ? minutes + minuteLabel + ', ' : ''
+ const secondPart = seconds > 0 ? seconds + secondLabel : ''
+ return dayPart + hourPart + minutePart + secondPart
+}
+
 bot(
  {
   pattern: 'menu',
@@ -31,7 +45,7 @@ Description: ${command.desc}\`\`\``)
 ┃✵│ Date: ${date}
 ┃✵│ Time: ${time}
 ┃✵│ Plugins: ${plugins.commands.length}
-┃✵│ Uptime: ${clockString(process.uptime())} 
+┃✵│ Uptime: ${formatRuntime(process.uptime())} 
 ┃✵╰──────────────
 ╰━━━━━━━━━━━━━━━┈⊷\n`
 
