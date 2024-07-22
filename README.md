@@ -33,7 +33,7 @@
 
 
 
-  ⭐️`Star This Repo`
+ # ⭐️`Star This Repo`
 If you find Zenon-bot helpful, consider giving it a star 🌟 to show your appreciation,Support.
 
 
