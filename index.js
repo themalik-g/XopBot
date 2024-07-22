@@ -28,7 +28,7 @@ async function initialize() {
    fs.writeFileSync('./lib/auth/creds.json', JSON.stringify(credsData.creds, null, 2))
   }
   await readAndRequireFiles(path.join(__dirname, '/lib/database/'))
-  console.log('♻️ Syncing Database')
+  console.log('Syncing Database')
 
   await config.DATABASE.sync()
 

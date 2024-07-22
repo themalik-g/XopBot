@@ -1,7 +1,5 @@
-const { bot, getUrl, isIgUrl, isPrivate } = require('../lib/')
-const insta = require('../mods/instagram')
-
-bot(
+const { command, getUrl, isIgUrl, isPrivate, getJson } = require('../lib/')
+command(
  {
   pattern: 'insta',
   fromMe: isPrivate,
@@ -11,21 +9,19 @@ bot(
  async (message, match) => {
   match = match || message.reply_message.text
   if (!match) return await message.sendMessage(message.jid, 'Give me a link')
-
   const url = getUrl(match.trim())[0]
   if (!url) return await message.sendMessage(message.jid, 'Invalid link')
   if (!isIgUrl(url)) return await message.sendMessage(message.jid, 'Invalid Instagram link')
   if (!isIgUrl(match.trim())) return await message.sendMessage(message.jid, 'Invalid Instagram link')
-
   try {
-   const stream = await insta(url)
+   const data = await getJson(`https://api.thexapi.xyz/api/v1/download/instagram?url=${url}`)
 
-   if (!stream) return await message.sendMessage(message.jid, 'No media found on the link')
-
-   // Assuming the stream is a readable stream of the media content
-   await message.sendFile(stream)
-  } catch (error) {
-   await message.sendMessage(message.jid, 'Error: ' + error.message)
+   if (data.data?.length == 0) return await message.sendMessage(message.jid, 'No media found on the link')
+   data.data.forEach(async (url) => {
+    await message.sendFile(url)
+   })
+  } catch (e) {
+   await message.sendMessage(message.jid, 'Error: ' + e)
   }
  }
 )
