@@ -18,11 +18,10 @@
 -  ✅️ *Group Management*
 -  ✅️ *Image Processing*
 -  ✅️ Weather Updates
-   - Reminders
-   - Translations
-   - Custom Commands
-   - Integration
-
--  ✅️b*Deployment and Customization*
-   - Free Deployment
-   - Customizable
+-  ✅️ Reminders
+-  ✅️Translations
+-  ✅️Custom Commands
+-  ✅️ Integration
+-  ✅️Deployment and Customization*
+-  ✅️Free Deployment
+-  ✅️Customizable
