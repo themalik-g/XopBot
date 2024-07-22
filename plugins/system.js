@@ -48,19 +48,37 @@ bot(
  {
   pattern: 'restart',
   fromMe: isPrivate,
-  desc: 'Restart the bot server',
+  desc: 'Restart all PM2 processes',
   type: 'system',
  },
  async (message) => {
-  await message.reply('Restarting the bot server...')
-  process.on('exit', function () {
-   require('child_process').spawn(process.argv.shift(), process.argv, {
-    cwd: process.cwd(),
-    detached: true,
-    stdio: 'inherit',
+  try {
+   await message.reply('Restarting all PM2 processes...')
+
+   const pm2 = require('pm2')
+
+   pm2.connect((err) => {
+    if (err) {
+     console.error(err)
+     message.reply('Failed to connect to PM2.')
+     return
+    }
+
+    pm2.restart('all', (err) => {
+     if (err) {
+      console.error(err)
+      message.reply('Failed to restart PM2 processes.')
+     } else {
+      message.reply('All PM2 processes have been restarted successfully.')
+     }
+
+     pm2.disconnect()
+    })
    })
-  })
-  process.exit()
+  } catch (error) {
+   console.error(error)
+   message.reply('An error occurred while attempting to restart PM2 processes.')
+  }
  }
 )
 
