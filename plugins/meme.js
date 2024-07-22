@@ -85,7 +85,7 @@ memeCommands.forEach(({ pattern, image, x, y, maxWidth, maxLines }) => {
   },
   async (message, text) => {
    if (!text) {
-    return await message.send('*Provide text!*')
+    return await message.reply('*Provide text!*')
    }
 
    const tempImage = `./temp/${pattern}.png`
