@@ -11,7 +11,7 @@ bot(
   let commits = await sys.syncGit()
   if (commits.total === 0) return await message.reply(`_Bot is UptoDate_`)
   let update = await sys.sync()
-  await message.bot.sendMessage(message.chat, { text: update }, { quoted: message })
+  await message.client.sendMessage(message.chat, { text: update }, { quoted: message })
 
   if (match == 'redeploy' && process.env.HEROKU_APP_NAME && process.env.HEROKU_API_KEY) {
    await message.reply('_Redeploying Bot, this may take a while!_')
@@ -32,7 +32,7 @@ bot(
   if (commits.total === 0) return await message.reply(`_Bot is UptoDate_`)
   let update = await sys.sync()
   let text = `> Updated Started\n\n${update}`
-  await message.bot.sendMessage(message.jid, { text })
+  await message.client.sendMessage(message.jid, { text })
   await require('simple-git')().reset('hard', ['HEAD'])
   await require('simple-git')().pull('origin', 'master')
   await message.reply(`_Bot Updated, Restart Now!_`)
