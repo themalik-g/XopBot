@@ -5,11 +5,11 @@ function executeCommand(command) {
  return new Promise((resolve, reject) => {
   exec(command, (error, stdout, stderr) => {
    if (error) {
-    reject(`Error: ${error.message}`)
+    reject(`> Error: ${error.message}`)
     return
    }
    if (stderr) {
-    reject(`Error: ${stderr}`)
+    reject(`> Error: ${stderr}`)
     return
    }
    resolve(stdout)
@@ -106,7 +106,7 @@ bot(
    }
 
    const sysInfo = `*_Server Specs_*
-\t \`\`\` Node.js Version: ${process.version} \`\`\`
+\t \`\`\` Node ${process.version} \`\`\`
 > Platform: ${process.platform}
 > Architecture: ${process.arch}
 > PID: ${process.pid}
@@ -148,6 +148,6 @@ bot(
   type: 'user',
  },
  async (message) => {
-  message.reply(`${formatRuntime(process.uptime())}`)
+  message.reply(`> *Alive Since: ${formatRuntime(process.uptime())}`)
  }
 )

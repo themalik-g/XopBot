@@ -1,6 +1,5 @@
-const { command, qrcode, Bitly, isPrivate, isUrl, readQr } = require('../lib')
-const { getLyrics } = require('../lib/functions')
-command(
+const { bot, qrcode, Bitly, isPrivate, isUrl, readQr } = require('../lib')
+bot(
  {
   pattern: 'qr',
   fromMe: isPrivate,
@@ -29,7 +28,7 @@ command(
  }
 )
 
-command(
+bot(
  {
   pattern: 'bitly',
   fromMe: isPrivate,
