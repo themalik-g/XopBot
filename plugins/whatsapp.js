@@ -1,6 +1,7 @@
 const config = require('../config')
 const { bot, parsedJid, isPrivate, serialize } = require('../lib/')
 const { loadMessage } = require('../lib/database/StoreDb')
+const { updateProfilePicture } = require('../lib/utils')
 bot(
  {
   pattern: 'forward',
@@ -70,7 +71,7 @@ bot(
 )
 bot(
  {
-  pattern: 'setpp',
+  pattern: 'pp ?(.*)',
   fromMe: true,
   desc: 'Set profile picture',
   type: 'whatsapp',
@@ -164,5 +165,46 @@ bot(
   if (message.isGroup) {
    client.sendMessage(message.jid, { delete: message.reply_message.key })
   }
+ }
+)
+
+bot(
+ {
+  pattern: 'rpp',
+  fromMe: true,
+  desc: 'Removes Profile Picture',
+  type: 'whatsapp',
+ },
+ async (message) => {
+  await message.removepp()
+  await message.reply('_Profile Picture Removed_')
+ }
+)
+
+bot(
+ {
+  pattern: 'vcard',
+  desc: 'Create Contact by given name.',
+  type: 'WhatsApp',
+ },
+ async (message, name) => {
+  if (!message.quoted) {
+   return message.reply('_Reply User With Name_')
+  }
+  if (!name) {
+   return message.reply('_You Tagged, Now Add Name!_')
+  }
+  const nameParts = name.split(' ')
+  if (nameParts.length > 3) {
+   name = nameParts.slice(0, 3).join(' ')
+  }
+  const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nORG:;\nTEL;type=CELL;type=VOICE;waid=${message.quoted.sender.split('@')[0]}:+${owner[0]}\nEND:VCARD`
+  const contact = {
+   contacts: {
+    displayName: name,
+    contacts: [{ vcard }],
+   },
+  }
+  return await message.client.sendMessage(message.chat, contact, { quoted: message })
  }
 )
