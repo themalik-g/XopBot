@@ -54,19 +54,7 @@ bot(
   type: 'misc',
  },
  async (context, match) => {
-  let url
-
-  if (typeof match === 'string') {
-   url = match.trim()
-  } else if (Array.isArray(match) && match.length > 0) {
-   url = match[0].trim()
-  } else if (typeof context.text === 'string') {
-   // Fallback to using the full message text
-   const parts = context.text.split(' ')
-   // Remove the command itself (assuming it's the first word)
-   parts.shift()
-   url = parts.join(' ').trim()
-  }
+  let url = context.text.split(' ').slice(1).join(' ').trim()
 
   if (!url) {
    return await context.reply(`_Need Website Link. Usage: ss <url>_`)
@@ -75,7 +63,7 @@ bot(
   try {
    const screenshotResponse = await captureScreenshot(url)
    if (screenshotResponse.status === 200) {
-    // Assuming the result is a buffer or a path to an image file
+    // Assuming screenshotResponse.result is a Buffer
     return await context.sendMessage(
      {
       image: screenshotResponse.result,
