@@ -81,7 +81,7 @@ bot(
  }
 )
 
-Index(
+bot(
  {
   pattern: 'ebinary',
   desc: 'Encode binary',
@@ -102,7 +102,7 @@ Index(
  }
 )
 
-Index(
+bot(
  {
   pattern: 'dbinary',
   desc: 'Decode binary',
@@ -119,7 +119,7 @@ Index(
  }
 )
 
-Index(
+bot(
  {
   pattern: 'qr',
   category: 'converter',
@@ -134,7 +134,7 @@ Index(
  }
 )
 const audtypes = ['audioMessage', 'videoMessage']
-Index(
+bot(
  {
   pattern: 'tomp3',
   desc: 'Changes type to audio.',
