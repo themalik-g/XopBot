@@ -126,12 +126,12 @@ bot(
   category: 'converter',
   desc: 'Convert any Data to Qr.',
  },
- async (context, text) => {
+ async (message, text) => {
   if (!text) {
-   return context.reply('*Provide Text To generate QR!*')
+   return message.reply('*Provide Text To generate QR!*')
   }
   let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${text}`
-  await context.client.sendFile(context.jid, { caption: '*_Scan QR To Get Your Text_*' }, { quoted: context }, 'image', qrUrl)
+  await message.client.sendFile(message.jid, { quoted: message }, 'image', qrUrl)
  }
 )
 const audtypes = ['audioMessage', 'videoMessage']

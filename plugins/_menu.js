@@ -28,6 +28,13 @@ bot(
   type: 'user',
  },
  async (message, match) => {
+  let buttonMessage = {
+   jid: message.jid,
+   button: [{ type: 'list', params: { title: 'Button 1', sections: [{ title: 'Button 1', rows: [{ header: 'title', title: 'Button 1', description: 'Description 1', id: '#menu' }] }] } }],
+   header: { title: 'X-Asena', subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
+   footer: { text: 'Interactive Native Flow Message' },
+   body: { text: 'Interactive Message' },
+  }
   if (match) {
    for (let command of plugins.commands) {
     if (command.pattern instanceof RegExp && command.pattern.test(message.prefix + match)) {
@@ -79,7 +86,7 @@ Description: ${command.desc}\`\`\``)
 
    menuHeader += `\n`
    menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
-   return await message.sendMessage(message.jid, menuHeader)
+   return await message.sendMessage(message.jid, buttonMessage, menuHeader)
   }
  }
 )

@@ -18,3 +18,9 @@ bot({ pattern: 'button', fromMe: true, desc: 'send a button message', usage: '#b
  }
  return await message.sendMessage(message.jid, data, {}, 'interactive')
 })
+
+/**
+ * button: [
+   { type: 'list', params: { title: 'Button 1', sections: [{ title: 'Button 1', rows: [{ header: 'title', title: 'Button 1', description: 'Description 1', id: '#menu' }] }] } },
+  ]
+ */
