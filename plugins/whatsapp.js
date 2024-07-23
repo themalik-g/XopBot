@@ -222,10 +222,12 @@ bot(
     type: 'WhatsApp',
   },
   async (message, text) => {
-    const originalMessage = message.reply_message && message.reply_message.fromMe ? message.reply_message : false
-
-    if (!originalMessage) {
+    if (!message.reply_message) {
       return await message.reply('_Reply to a message sent by the bot to edit it!_')
+    }
+
+    if (!message.reply_message.fromMe) {
+      return await message.reply('_You can only edit messages sent by the bot!_')
     }
 
     if (!text) {
@@ -233,21 +235,15 @@ bot(
     }
 
     try {
-      // Use message.edit if available, otherwise fall back to message.client.edit
-      if (typeof message.edit === 'function') {
-        await message.edit(text, { quoted: originalMessage })
-      } else if (message.client && typeof message.client.edit === 'function') {
-        await message.client.edit(originalMessage.key, text)
-      } else {
-        throw new Error('Edit function not available')
-      }
+      // Use message.client.editMessage for editing
+      await message.client.edit(message.jid, message.reply_message.id, text)
       return await message.reply('Message edited successfully!')
     } catch (error) {
       console.error('Error editing message:', error)
       return await message.reply('Failed to edit the message. Please try again.')
     }
   }
-) 
+)
 
 bot(
  {
