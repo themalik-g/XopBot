@@ -3,42 +3,44 @@ const { truecaller } = require('../lib/database/truecaller')
 
 bot(
  {
-  pattern: 'truecaller ?(.*)',
+  pattern: 'true ?(.*)',
   desc: 'search number on truecaller',
   type: 'search',
   fromMe: true,
  },
  async (message, match) => {
-  if (match.match(/login/gi)) {
-   match = match.replace(/login/gi, '').trim()
-   if (!match) {
+  const command = match || ''
+
+  if (command.includes('login')) {
+   const number = command.replace(/login/gi, '').trim()
+   if (!number) {
     return await message.reply('_Please provide a number to send OTP_')
    }
-   const result = await truecaller.set(match)
+   const result = await truecaller.set(number)
    if (result === true) {
-    return await message.reply(`_Successfully sent OTP to this number: ${match}_\n_Use *true otp* <key> to login_`)
+    return await message.reply(`_Successfully sent OTP to this number: ${number}_\n_Use *true otp* <key> to login_`)
    }
    return await message.reply(`*Message:* _Use *true logout* first_\n*Reason*: ${result}`)
   }
 
-  if (match.match(/logout/gi)) {
+  if (command.includes('logout')) {
    await truecaller.logout()
    return await message.reply('_Successfully logged out_')
   }
 
-  if (match.match(/otp/gi)) {
-   match = match.replace(/otp/gi, '').trim()
-   if (!match) {
+  if (command.includes('otp')) {
+   const otpKey = command.replace(/otp/gi, '').trim()
+   if (!otpKey) {
     return await message.reply('_Please provide an OTP_')
    }
-   const result = await truecaller.otp(match)
+   const result = await truecaller.otp(otpKey)
    if (result === true) {
     return await message.reply('_Successfully logged into Truecaller!_')
    }
    return await message.reply(`*Message:* _Use *true logout* first_\n*Reason*: ${result}`)
   }
 
-  const user = (message.mention.jid?.[0] || message.reply_message.mention.jid?.[0] || message.reply_message.reply || match).replace(/[^0-9]/g, '')
+  const user = (message.mention.jid?.[0] || message.reply_message.mention.jid?.[0] || message.reply_message || command).replace(/[^0-9]/g, '')
 
   if (!user) {
    return await message.reply('_Please reply to a user or provide a number_')
