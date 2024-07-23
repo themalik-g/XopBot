@@ -29,9 +29,10 @@ command(
   const chatId = message.jid
   const isAntibotActive = await isBanned(chatId)
 
-  // Validate the command argument
-  const option = match[1]?.toLowerCase()
-  if (!option) {
+  // Extract and trim the command option
+  const option = (match[1] || '').trim().toLowerCase()
+
+  if (option === '') {
    return await message.sendMessage(chatId, 'Usage: antibot on/off')
   }
 
