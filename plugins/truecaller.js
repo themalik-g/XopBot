@@ -46,6 +46,10 @@ bot(
    return await message.reply('_Please reply to a user or provide a number_')
   }
 
+  if (!truecaller || !truecaller.search) {
+   return await message.reply('_Truecaller search function is not available_')
+  }
+
   const response = await truecaller.search(user)
 
   if (!response.status) {
