@@ -208,3 +208,60 @@ bot(
   return await message.client.sendMessage(message.chat, contact, { quoted: message })
  }
 )
+
+bot(
+ {
+  pattern: 'edit',
+  fromMe: true,
+  desc: 'Edit message that was sent by bot',
+  type: 'WhatsApp',
+ },
+ async (message, text) => {
+  const originalMessage = message.reply_message && message.reply_message.fromMe ? message.reply_message : false
+  if (!originalMessage) {
+   return await message.reply('_Reply Your Message!_')
+  }
+  if (!text) {
+   return await message.reply('_Put Text To Replace!_')
+  }
+  return await message.edit(text, { edit: originalMessage })
+ }
+)
+
+bot(
+ {
+  pattern: 'wa',
+  desc: 'Get wa.me link for quoted or mentioned user.',
+  type: 'WhatsApp',
+ },
+ async (m) => {
+  const userJid = m.reply_message ? m.reply_message.sender : m.mentionedJid[0] || false
+  const waLink = userJid ? `https://wa.me/${userJid.split('@')[0]}` : '_Reply Or Mention A User_'
+  await m.reply(waLink)
+ }
+)
+
+bot(
+ {
+  pattern: 'join',
+  fromMe: true,
+  info: 'joins group by link',
+  type: 'WhatsApp',
+ },
+ async (message, args) => {
+  let groupLink = message.reply_message?.groupInvite ? message.reply_message.msg : args || message.reply_text
+  const groupPattern = /https:\/\/chat\.whatsapp\.com\/([^\s]+)/
+  const match = groupLink.match(groupPattern)
+
+  if (!match) {
+   return message.reply('*_Provide Group Link!_*')
+  }
+
+  let groupId = match[1].trim()
+  const joinResponse = await message.bot.groupAcceptInvite(groupId)
+  if (joinResponse.includes('joined to:')) {
+   return reply(message, '*_Joined_*', {}, '', message)
+  }
+ }
+)
+
