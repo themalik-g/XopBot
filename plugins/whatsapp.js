@@ -176,8 +176,13 @@ bot(
   type: 'whatsapp',
  },
  async (message) => {
-  await message.removePP()
-  await message.reply('_Profile Picture Removed_')
+  try {
+   await message.client.removeProfilePicture(message.user)
+   await message.reply('_Profile Picture Removed_')
+  } catch (error) {
+   console.error('Error removing profile picture:', error)
+   await message.reply('_Failed to remove profile picture_')
+  }
  }
 )
 
