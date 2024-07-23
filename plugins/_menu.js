@@ -76,7 +76,7 @@ bot(
     { type: 'reply', params: { display_text: 'MENU', id: '#menu' } },
     { type: 'url', params: { display_text: 'Neeraj-x0', url: 'https://www.neerajx0.xyz/', merchant_url: 'https://www.neerajx0.xyz/' } },
    ],
-   header: { title: 'X-Asena', subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
+   header: { title: `ʜᴇʟʟᴏ${message.pushName}`, subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
    footer: { text: BOT_NAME },
    body: { text: menuHeader },
   }
