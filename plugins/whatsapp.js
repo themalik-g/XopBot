@@ -1,7 +1,6 @@
 const config = require('../config')
 const { bot, parsedJid, isPrivate, serialize } = require('../lib/')
 const { loadMessage } = require('../lib/database/StoreDb')
-const { updateProfilePicture } = require('../lib/utils')
 bot(
  {
   pattern: 'forward',
@@ -215,34 +214,15 @@ bot(
 )
 
 bot(
-  {
-    pattern: 'edit',
-    fromMe: true,
-    desc: 'Edit message that was sent by bot',
-    type: 'WhatsApp',
-  },
-  async (message, text) => {
-    if (!message.reply_message) {
-      return await message.reply('_Reply to a message sent by the bot to edit it!_')
-    }
-
-    if (!message.reply_message.fromMe) {
-      return await message.reply('_You can only edit messages sent by the bot!_')
-    }
-
-    if (!text) {
-      return await message.reply('_Provide the new text to replace the original message!_')
-    }
-
-    try {
-      // Use message.client.editMessage for editing
-      await message.client.edit(message.jid, message.reply_message.id, text)
-      return await message.reply('Message edited successfully!')
-    } catch (error) {
-      console.error('Error editing message:', error)
-      return await message.reply('Failed to edit the message. Please try again.')
-    }
-  }
+ {
+  pattern: 'edit',
+  fromMe: true,
+  desc: 'Edit message that was sent by bot',
+  type: 'WhatsApp',
+ },
+ async (message, text) => {
+  await message.client.edit(message.jid, message.reply_message.id, text)
+ }
 )
 
 bot(
