@@ -25,6 +25,7 @@ bot(
  },
  async (message, match) => {
   const start = new Date().getTime()
+  await message.sendMessage(message.jid, '```Server Check!```')
   const end = new Date().getTime()
   return await message.reply(`> *ʟᴀᴛᴇɴᴄʏ ${(end - start)} ᴍs*`)
  }
@@ -52,7 +53,7 @@ bot(
  },
  async (message) => {
   try {
-   await message.reply('Restarting all PM2 processes...')
+   await message.reply('> ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ')
 
    const pm2 = require('pm2')
 
