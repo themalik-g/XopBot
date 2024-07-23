@@ -24,10 +24,11 @@ bot(
   type: 'system',
  },
  async (message, match) => {
-  const start = new Date().getTime()
+  const start = performance.now()
   await message.sendMessage(message.jid, '```Server Check!```')
-  const end = new Date().getTime()
-  return await message.reply(`> *ʟᴀᴛᴇɴᴄʏ ${(end - start)} ᴍs*`)
+  const end = performance.now()
+  const latency = (end - start).toFixed(5)
+  return await message.reply(`> *ʟᴀᴛᴇɴᴄʏ ${latency} ᴍs*`)
  }
 )
 

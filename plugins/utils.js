@@ -1,4 +1,5 @@
 const { bot, qrcode, Bitly, isPrivate, isUrl, readQr } = require('../lib')
+const formatRuntime = require('./_menu')
 bot(
  {
   pattern: 'qr',
@@ -41,5 +42,31 @@ bot(
   if (!isUrl(match)) return await message.reply('_Not a url_')
   let short = await Bitly(match)
   return await message.reply(short.link)
+ }
+)
+
+bot(
+ {
+  pattern: 'repo',
+  info: 'Sends info about repo',
+  type: 'utils',
+ },
+ async (message) => {
+  const { data } = await axios.get('https://api.github.com/repos/AstroAnalytics/XopBot')
+  let repo = 'https://github.com/EX-BOTS/Zenon-bot'
+  const repoInfo = `
+   ᴢᴇɴᴏɴ ᴠ𝟷
+ ╭──────────────
+ │ ᴜsᴇʀ : ${message.pushName}
+ │ sᴛᴀʀs : ${data?.stargazers_count} stars
+ │ ғᴏʀᴋs : ${data?.forks_count} forks
+ │ ʀᴇᴘᴏ : ${repo}
+ │ ᴜᴘᴛɪᴍᴇ : ${formatRuntime(process.uptime())}
+ ╰────────────── 
+   `.trim()
+
+  return await message.sendMessage(message.jid, {
+   caption: repoInfo,
+  })
  }
 )
