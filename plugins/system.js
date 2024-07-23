@@ -25,10 +25,9 @@ bot(
  },
  async (message) => {
   const startTime = new Date().getTime()
-  const { key: messageKey } = await message.reply('_Server Check!_')
   const endTime = new Date().getTime()
   const pingTime = endTime - startTime
-  await message.sendMessage(`> *ʟᴀᴛᴇɴᴄʏ: ${pingTime} ᴍs*`, { edit: messageKey }, '', message)
+  await message.reply(`> *ʟᴀᴛᴇɴᴄʏ: ${pingTime} ᴍs*`)
  }
 )
 
