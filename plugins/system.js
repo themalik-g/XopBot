@@ -20,14 +20,15 @@ bot(
  {
   pattern: 'ping',
   fromMe: isPrivate,
-  desc: 'To check ping',
+  desc: 'Check Server Responce',
   type: 'system',
  },
- async (message, match) => {
-  const start = new Date().getTime()
-  await message.sendMessage(message.jid, '```Server Check!```')
-  const end = new Date().getTime()
-  return await message.sendMessage(message.jid, '*Pong!*\n ```Latency' + (end - start) + '``` *ms*')
+ async (message) => {
+  const startTime = new Date().getTime()
+  const { key: messageKey } = await message.reply('_Server Check!_')
+  const endTime = new Date().getTime()
+  const pingTime = endTime - startTime
+  await message.sendMessage(`> *ʟᴀᴛᴇɴᴄʏ: ${pingTime} ᴍs*`, { edit: messageKey }, '', message)
  }
 )
 

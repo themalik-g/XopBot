@@ -1,6 +1,6 @@
 const { fromBuffer } = require('file-type')
 const { bot, isPrivate } = require('../lib/')
-const { ffmpeg, parseTimeToSeconds } = require('../lib/functions')
+const { ffmpeg, parseTimeToSeconds, captureScreenshot } = require('../lib/functions')
 bot(
  {
   pattern: 'trim',
@@ -34,7 +34,7 @@ bot(
  },
  async (message, text) => {
   if (!text) {
-   text = '_Provide Text With Commas_'
+   text = '_Provide Text_'
   } else {
    text += ' '
   }
@@ -42,5 +42,27 @@ bot(
   const result = text.includes('readmore') ? text.replace(/readmore/, readMoreChar) : text.replace(' ', readMoreChar)
 
   await message.reply(result)
+ }
+)
+
+bot(
+ {
+  pattern: 'ss',
+  fromMe: isPrivate,
+  desc: 'Get a screenshot of a webpage',
+  type: 'misc',
+ },
+ async (context, args) => {
+  const url = args.split(' ')[0].trim()
+  if (!url) {
+   return await context.reply(`_Need Website Link_`)
+  }
+
+  const screenshotResponse = await captureScreenshot(url)
+  if (screenshotResponse.status === 200) {
+   return await context.sendMessage(screenshotResponse.result, context)
+  } else {
+   await context.reply('_No response from server!_')
+  }
  }
 )
