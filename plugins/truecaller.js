@@ -1,5 +1,21 @@
 const { bot } = require('../lib/')
-const { truecaller, search } = require('../lib/database/truecaller')
+const truecallerDB = require('../lib/database/truecaller')
+async function search(number) {
+ const record = await truecallerDB.findOne({ where: { number } })
+ if (record) {
+  return {
+   status: true,
+   key: record.dataValues.key,
+   token: record.dataValues.token,
+   number: record.dataValues.number,
+  }
+ } else {
+  return {
+   status: false,
+   message: 'Number not found',
+  }
+ }
+}
 
 bot(
  {
@@ -16,15 +32,15 @@ bot(
    if (!number) {
     return await message.reply('_Please provide a number to send OTP_')
    }
-   const result = await truecaller.set(number)
-   if (result === true) {
+   const result = await truecallerDB.setTrueCallerKey({ number })
+   if (result === 'created') {
     return await message.reply(`_Successfully sent OTP to this number: ${number}_\n_Use *true otp* <key> to login_`)
    }
    return await message.reply(`*Message:* _Use *true logout* first_\n*Reason*: ${result}`)
   }
 
   if (command.includes('logout')) {
-   await truecaller.logout()
+   await truecallerDB.trueLogout()
    return await message.reply('_Successfully logged out_')
   }
 
@@ -33,8 +49,8 @@ bot(
    if (!otpKey) {
     return await message.reply('_Please provide an OTP_')
    }
-   const result = await truecaller.otp(otpKey)
-   if (result === true) {
+   const result = await truecallerDB.setTrueCallerKey({ token: otpKey })
+   if (result === 'updated') {
     return await message.reply('_Successfully logged into Truecaller!_')
    }
    return await message.reply(`*Message:* _Use *true logout* first_\n*Reason*: ${result}`)
@@ -44,10 +60,6 @@ bot(
 
   if (!user) {
    return await message.reply('_Please reply to a user or provide a number_')
-  }
-
-  if (!truecaller || !truecaller.search) {
-   return await message.reply('_Truecaller search function is not available_')
   }
 
   const response = await search(user)
