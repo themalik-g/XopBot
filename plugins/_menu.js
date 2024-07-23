@@ -86,7 +86,7 @@ Description: ${command.desc}\`\`\``)
 
    menuHeader += `\n`
    menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
-   return await message.sendMessage(message.jid, menuHeader, buttonMessage)
+   return await message.sendMessage(message.jid, menuHeader, buttonMessage, {}, 'interactive')
   }
  }
 )
