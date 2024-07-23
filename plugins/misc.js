@@ -53,21 +53,25 @@ bot(
   desc: 'Get a screenshot of a webpage',
   type: 'misc',
  },
- async (context, args) => {
-  const url = args.split(' ')[0].trim()
+ async (context, match) => {
+  const url = match.trim()
   if (!url) {
-   return await context.reply(`_Need Website Link_`)
+   return await context.reply(`_Need Website Link. Usage: ss <url>_`)
   }
 
-  const screenshotResponse = await captureScreenshot(url)
-  if (screenshotResponse.status === 200) {
-   return await context.sendMessage(screenshotResponse.result, context)
-  } else {
-   await context.reply('_No response from server!_')
+  try {
+   const screenshotResponse = await captureScreenshot(url)
+   if (screenshotResponse.status === 200) {
+    return await context.sendMessage(screenshotResponse.result, context)
+   } else {
+    await context.reply(`_Failed to capture screenshot. Status: ${screenshotResponse.status}_`)
+   }
+  } catch (error) {
+   console.error('Error capturing screenshot:', error)
+   await context.reply('_An error occurred while capturing the screenshot._')
   }
  }
 )
-
 bot(
  {
   pattern: 'alive',
