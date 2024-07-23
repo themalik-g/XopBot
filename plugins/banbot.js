@@ -26,27 +26,32 @@ command(
   type: 'group',
  },
  async (message, match) => {
-  const chatid = message.jid
-  const isban = await isBanned(chatid)
+  const chatId = message.jid
+  const isAntibotActive = await isBanned(chatId)
 
-  if (!match[1]) {
-   return await message.sendMessage(message.jid, 'Usage: antibot on/off')
+  // Validate the command argument
+  const option = match[1]?.toLowerCase()
+  if (!option) {
+   return await message.sendMessage(chatId, 'Usage: antibot on/off')
   }
 
-  if (match[1].toLowerCase() === 'on') {
-   if (isban) {
-    return await message.sendMessage(message.jid, 'Antibot is already on')
-   }
-   await banUser(chatid)
-   return await message.sendMessage(message.jid, 'Antibot turned on')
-  } else if (match[1].toLowerCase() === 'off') {
-   if (!isban) {
-    return await message.sendMessage(message.jid, 'Antibot is already off')
-   }
-   await unbanUser(chatid)
-   return await message.sendMessage(message.jid, 'Antibot turned off')
-  } else {
-   return await message.sendMessage(message.jid, 'Invalid option. Use "on" or "off"')
+  switch (option) {
+   case 'on':
+    if (isAntibotActive) {
+     return await message.sendMessage(chatId, 'Antibot is already on')
+    }
+    await banUser(chatId)
+    return await message.sendMessage(chatId, 'Antibot turned on')
+
+   case 'off':
+    if (!isAntibotActive) {
+     return await message.sendMessage(chatId, 'Antibot is already off')
+    }
+    await unbanUser(chatId)
+    return await message.sendMessage(chatId, 'Antibot turned off')
+
+   default:
+    return await message.sendMessage(chatId, 'Invalid option. Use "on" or "off"')
   }
  }
 )
