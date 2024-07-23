@@ -28,32 +28,8 @@ bot(
   type: 'user',
  },
  async (message, match) => {
-  let data = {
-   jid: message.jid,
-   button: [
-    { type: 'list', params: { title: 'Button 1', sections: [{ title: 'Button 1', rows: [{ header: 'title', title: 'Button 1', description: 'Description 1', id: '#menu' }] }] } },
-    { type: 'reply', params: { display_text: 'MENU', id: '#menu' } },
-    { type: 'url', params: { display_text: 'Neeraj-x0', url: 'https://www.neerajx0.xyz/', merchant_url: 'https://www.neerajx0.xyz/' } },
-    { type: 'address', params: { display_text: 'Address', id: 'message' } },
-    { type: 'location', params: {} },
-    { type: 'copy', params: { display_text: 'copy', id: '123456789', copy_code: 'message' } },
-    { type: 'call', params: { display_text: 'Call', phone_number: '123456789' } },
-   ],
-   header: { title: 'X-Asena', subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
-   footer: { text: 'Interactive Native Flow Message' },
-   body: { text: 'Interactive Message' },
-  }
-  if (match) {
-   for (let command of plugins.commands) {
-    if (command.pattern instanceof RegExp && command.pattern.test(message.prefix + match)) {
-     const commandName = command.pattern.toString().split(/\W+/)[1]
-     message.reply(`\`\`\`Command: ${message.prefix}${commandName.trim()}
-Description: ${command.desc}\`\`\``)
-    }
-   }
-  } else {
-   const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
-   let menuHeader = `╭═══ ${BOT_NAME} ═══⊷
+  const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
+  let menuHeader = `╭═══ ${BOT_NAME} ═══⊷
 │ ᴜsᴇʀ: ${message.pushName}
 │ ᴏs: ${os.platform}
 │ ᴘʟᴀᴛғᴏʀᴍ: ${hostname().split('-')[0]}
@@ -63,39 +39,38 @@ Description: ${command.desc}\`\`\``)
 │ ʀᴜɴᴛɪᴍᴇ: ${formatRuntime(process.uptime())} 
 ╰━━━━━━━━━━━━━━━┈⊷\n`
 
-   let commandList = []
-   let categories = []
+  let commandList = []
+  let categories = []
 
-   plugins.commands.forEach((command) => {
-    if (command.pattern instanceof RegExp) {
-     const commandName = command.pattern.toString().split(/\W+/)[1]
-     const commandType = command.type ? command.type.toLowerCase() : 'misc'
+  plugins.commands.forEach((command) => {
+   if (command.pattern instanceof RegExp) {
+    const commandName = command.pattern.toString().split(/\W+/)[1]
+    const commandType = command.type ? command.type.toLowerCase() : 'misc'
 
-     if (!command.dontAddCommandList && commandName) {
-      commandList.push({ commandName, commandType })
+    if (!command.dontAddCommandList && commandName) {
+     commandList.push({ commandName, commandType })
 
-      if (!categories.includes(commandType)) {
-       categories.push(commandType)
-      }
+     if (!categories.includes(commandType)) {
+      categories.push(commandType)
      }
     }
-   })
+   }
+  })
 
-   commandList.sort()
-   categories.sort().forEach((category) => {
-    menuHeader += `\n╭━━━〔  *${tiny(category)}* 〕━━━┈⊷`
-    commandList
-     .filter(({ commandType }) => commandType === category)
-     .forEach(({ commandName }) => {
-      menuHeader += `\n│ ${tiny(commandName.trim())}`
-     })
-    menuHeader += `\n╰━━━━━━━━━━━━━━━┈⊷`
-   })
+  commandList.sort()
+  categories.sort().forEach((category) => {
+   menuHeader += `\n╭━━━〔  *${tiny(category)}* 〕━━━┈⊷`
+   commandList
+    .filter(({ commandType }) => commandType === category)
+    .forEach(({ commandName }) => {
+     menuHeader += `\n│ ${tiny(commandName.trim())}`
+    })
+   menuHeader += `\n╰━━━━━━━━━━━━━━━┈⊷`
+  })
 
-   menuHeader += `\n`
-   menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
-   return await message.sendMessage(message.jid, menuHeader, data, {}, 'interactive')
-  }
+  menuHeader += `\n`
+  menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
+  return await message.sendMessage(message.jid, menuHeader)
  }
 )
 
