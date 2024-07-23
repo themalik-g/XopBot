@@ -30,7 +30,6 @@ bot(
  async (message, match) => {
   const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
   let menuHeader = `╭━━━〔 ${BOT_NAME} 〕━━━⊷
-│ ᴜsᴇʀ: ${message.pushName}
 │ ᴏs: ${os.platform}
 │ ᴘʟᴀᴛғᴏʀᴍ: ${hostname().split('-')[0]}
 │ ᴅᴀᴛᴇ: ${date}
@@ -76,7 +75,7 @@ bot(
     { type: 'reply', params: { display_text: 'MENU', id: '#menu' } },
     { type: 'url', params: { display_text: 'Neeraj-x0', url: 'https://www.neerajx0.xyz/', merchant_url: 'https://www.neerajx0.xyz/' } },
    ],
-   header: { title: `ʜᴇʟʟᴏ${message.pushName}`, subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
+   header: { title: `ʜᴇʟʟᴏ ${tiny(message.pushName)}`, subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
    footer: { text: BOT_NAME },
    body: { text: menuHeader },
   }
