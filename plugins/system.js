@@ -25,7 +25,6 @@ bot(
  },
  async (message, match) => {
   const start = new Date().getTime()
-  await message.sendMessage(message.jid, '```Server Check!```')
   const end = new Date().getTime()
   return await message.reply(`> *ʟᴀᴛᴇɴᴄʏ ${(end - start)} ᴍs*`)
  }
