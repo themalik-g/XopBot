@@ -1,6 +1,6 @@
 const { bot } = require('../lib/')
 const { parsedJid } = require('../lib/functions')
-const { banUser, unbanUser, isBanned } = require('../database/ban')
+const { banUser, unbanUser, isBanned } = require('../lib/database/ban')
 bot(
  {
   on: 'message',
