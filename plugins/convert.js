@@ -119,7 +119,7 @@ bot(
   await context.reply(decodedText)
  }
 )
-
+//
 bot(
  {
   pattern: 'qr',
