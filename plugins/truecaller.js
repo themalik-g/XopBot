@@ -1,21 +1,6 @@
 const { bot } = require('../lib/')
 const truecallerDB = require('../lib/database/truecaller')
-async function search(number) {
- const record = await truecallerDB.findOne({ where: { number } })
- if (record) {
-  return {
-   status: true,
-   key: record.dataValues.key,
-   token: record.dataValues.token,
-   number: record.dataValues.number,
-  }
- } else {
-  return {
-   status: false,
-   message: 'Number not found',
-  }
- }
-}
+const { search } = require('../lib/database/truecaller')
 
 bot(
  {
