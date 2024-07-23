@@ -176,7 +176,7 @@ bot(
   type: 'whatsapp',
  },
  async (message) => {
-  await message.client.removepp()
+  await message.removePP()
   await message.reply('_Profile Picture Removed_')
  }
 )
@@ -264,4 +264,3 @@ bot(
   }
  }
 )
-
