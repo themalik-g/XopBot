@@ -4,7 +4,7 @@ const { search } = require('../lib/database/truecaller')
 
 bot(
  {
-  pattern: 'true ?(.*)',
+  pattern: 'truecaller ?(.*)',
   desc: 'search number on truecaller',
   type: 'search',
   fromMe: true,
