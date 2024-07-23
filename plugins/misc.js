@@ -62,9 +62,9 @@ bot(
 
   try {
    const screenshotResponse = await captureScreenshot(url)
-   if (screenshotResponse.status === 200) {
-    // Assuming screenshotResponse.result is a Buffer
-    return await context.sendFile(
+   if (screenshotResponse.status === 200 && screenshotResponse.result) {
+    // Assuming screenshotResponse.result is the screenshot data (Buffer or base64 string)
+    return await context.sendMessage(
      {
       image: screenshotResponse.result,
       caption: `Screenshot of ${url}`,
@@ -80,6 +80,7 @@ bot(
   }
  }
 )
+
 bot(
  {
   pattern: 'alive',
