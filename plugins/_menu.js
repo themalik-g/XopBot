@@ -29,7 +29,7 @@ bot(
  },
  async (message, match) => {
   const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
-  let menuHeader = `╭═══ ${BOT_NAME} ═══⊷
+  let menuHeader = `╭━━━━━〔 ${BOT_NAME} 〕━━━━━⊷
 │ ᴜsᴇʀ: ${message.pushName}
 │ ᴏs: ${os.platform}
 │ ᴘʟᴀᴛғᴏʀᴍ: ${hostname().split('-')[0]}
