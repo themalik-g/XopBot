@@ -1,4 +1,4 @@
-const { bot, isAdmin, parsedJid } = require('../lib')
+const { bot, isAdmin, parsedJid, isPrivate } = require('../lib')
 bot(
  {
   pattern: 'add',
@@ -285,5 +285,44 @@ bot(
    rejectedList += `@${request.jid.split('@')[0]}\n`
   }
   await message.reply(rejectedList, { mentions: requests.map((r) => r.jid) })
+ }
+)
+
+bot(
+ {
+  pattern: 'vote',
+  fromMe: isPrivate,
+  desc: 'Create Poll',
+  type: 'group',
+ },
+ async (message, match) => {
+  const [question, options] = details.split(',')
+  if (options.length < 2) {
+   return message.reply('_Use .vote question;option1,option2')
+  }
+  const pollOptions = options.split(',').filter((option) => option.trim())
+  await message.client.sendMessage(message.jid, {
+   poll: { name: question, values: pollOptions },
+  })
+ }
+)
+
+bot(
+ {
+  pattern: 'tagadmin',
+  desc: 'Tags only Admin numbers',
+  category: 'group',
+ },
+ async (context, message) => {
+  if (!message.isGroup) return await message.reply('_This command is for groups_')
+  if (!isAdmin(message.jid, message.user, message.client)) return await message.reply('_I am not admin_')
+
+  const adminList = context.admins.map((admin) => ` *|  @${admin.id.split('@')[0]}*`).join('\n')
+  const tagMessage = `\n▢ FROM: @${context.sender.split('@')[0]}\n${message ? '≡ Message: ' + message : ''}\n\n*┌─⊷ GROUP ADMINS*\n${adminList}\n*└───────────⊷*\n\n${Config.caption}`.trim()
+
+  await context.client.sendMessage(context.chat, {
+   text: tagMessage,
+   mentions: [context.sender, ...context.admins.map((admin) => admin.id)],
+  })
  }
 )
