@@ -14,6 +14,8 @@ module.exports = {
  ANTILINK: toBool(process.env.ANTI_LINK) || false,
  LOGS: toBool(process.env.LOGS) || true,
  ANTILINK_ACTION: process.env.ANTI_LINK || 'kick',
+ AUTOMUTE_MSG: process.env.AUTOMUTE_MSG || '_Group automuted!_',
+ AUTOUNMUTE_MSG: process.env.AUTOUNMUTE_MSG || '_Group autounmuted!_',
  LANG: process.env.LANG || 'EN',
  AUTH_TOKEN: '',
  RMBG_KEY: process.env.RMBG_KEY || false,
