@@ -30,7 +30,7 @@ bot(
  async (message, match) => {
   let buttonMessage = {
    jid: message.jid,
-   button: [{ type: 'list', params: { title: 'Button 1', sections: [{ title: 'Button 1', rows: [{ header: 'title', title: 'Button 1', description: 'Description 1', id: '#menu' }] }] } }],
+   button: [{ type: 'reply', params: { display_text: 'SUPPORT', id: '#support' } }],
    header: { title: 'X-Asena', subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
    footer: { text: 'Interactive Native Flow Message' },
    body: { text: 'Interactive Message' },
