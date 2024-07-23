@@ -20,7 +20,7 @@ bot({
 
 // Handle the antibot command
 bot({
-  pattern: 'antibot (on|off)',
+  pattern: 'antibot',
   fromMe: true,
   desc: 'Toggle bot ban status in a chat',
   type: 'command',
@@ -28,23 +28,28 @@ bot({
   const chatid = message.jid;
   const action = match[1]; // Capture the argument (on or off)
 
-  if (action === 'on') {
-    const isban = await isBanned(chatid);
-    if (isban) {
-      return await message.sendMessage(chatid, 'Bot is already banned');
+  try {
+    if (action === 'on') {
+      const isban = await isBanned(chatid);
+      if (isban) {
+        return await message.sendMessage(chatid, 'Bot is already banned');
+      }
+      await banUser(chatid);
+      return await message.sendMessage(chatid, 'Bot banned');
+    } 
+    else if (action === 'off') {
+      const isban = await isBanned(chatid);
+      if (!isban) {
+        return await message.sendMessage(chatid, 'Bot is not banned');
+      }
+      await unbanUser(chatid);
+      return await message.sendMessage(chatid, 'Bot unbanned');
+    } 
+    else {
+      return await message.sendMessage(chatid, 'Invalid argument. Use "on" to ban or "off" to unban.');
     }
-    await banUser(chatid);
-    return await message.sendMessage(chatid, 'Bot banned');
-  } 
-  else if (action === 'off') {
-    const isban = await isBanned(chatid);
-    if (!isban) {
-      return await message.sendMessage(chatid, 'Bot is not banned');
-    }
-    await unbanUser(chatid);
-    return await message.sendMessage(chatid, 'Bot unbanned');
-  } 
-  else {
-    return await message.sendMessage(chatid, 'Invalid argument. Use "on" to ban or "off" to unban.');
+  } catch (error) {
+    console.error('Error handling antibot command:', error);
+    return await message.sendMessage(chatid, 'An error occurred while processing the command.');
   }
 });
