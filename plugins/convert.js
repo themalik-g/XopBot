@@ -56,9 +56,10 @@ bot(
   pattern: 'mp3',
   fromMe: isPrivate,
   desc: 'converts video/voice to mp3',
-  type: 'downloader',
+  type: 'converter',
  },
  async (message, match, m) => {
+  if (!match.reply_message.video || reply_message.audio) return await message.reply('_Reply Video/Audio')
   let buff = await m.quoted.download()
   console.log(typeof buff)
   buff = await toAudio(buff, 'mp3')
@@ -90,7 +91,7 @@ bot(
  async (context, text) => {
   let inputText = text ? text : context.reply_text
   if (!inputText) {
-   return context.reply('*_Send text to be encoded.!_*')
+   return context.reply('_Input String_')
   }
   let binaryText = inputText
    .split('')
@@ -111,7 +112,7 @@ bot(
  async (context, text) => {
   let binaryText = text ? text : context.reply_text
   if (!binaryText) {
-   return context.reply('Send text to be decoded.')
+   return context.reply('_Input binary_.')
   }
   let binaryArray = binaryText.split(' ')
   let decodedText = binaryArray.map((binary) => String.fromCharCode(parseInt(binary, 2))).join('')
@@ -130,34 +131,10 @@ bot(
    return context.reply('*Provide Text To generate QR!*')
   }
   let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${text}`
-  await context.client.sendMessage(context.jid, { caption: '*_Scan QR To Get Your Text_*' }, { quoted: context }, 'image', qrUrl)
+  await context.client.sendFile(context.jid, { caption: '*_Scan QR To Get Your Text_*' }, { quoted: context }, 'image', qrUrl)
  }
 )
 const audtypes = ['audioMessage', 'videoMessage']
-bot(
- {
-  pattern: 'tomp3',
-  desc: 'Changes type to audio.',
-  category: 'converter',
- },
- async (context) => {
-  let messageType = audtypes.includes(context.mtype) ? context : context.reply_message
-  if (!messageType || !audtypes.includes(messageType?.mtype)) {
-   return context.reply('*Reply to A Video.*')
-  }
-  let filePath = await context.client.downloadAndSaveMediaMessage(messageType)
-  const { toAudio } = require('../lib')
-  let fileData = fs.readFileSync(filePath)
-  let audioData = await toAudio(fileData)
-  try {
-   fs.unlink(filePath)
-  } catch (error) {}
-  return await context.client.sendMessage(context.jid, {
-   audio: audioData,
-   mimetype: 'audio/mpeg',
-  })
- }
-)
 
 bot(
  {
