@@ -40,7 +40,7 @@ bot(
    return await message.reply(`*Message:* _Use *true logout* first_\n*Reason*: ${result}`)
   }
 
-  const user = (message.mention.jid?.[0] || message.reply_message.mention.jid?.[0] || message.reply_message || command).replace(/[^0-9]/g, '')
+  const user = (message.jid || command).replace(/[^0-9]/g, '')
 
   if (!user) {
    return await message.reply('_Please reply to a user or provide a number_')
