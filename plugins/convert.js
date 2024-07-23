@@ -130,7 +130,7 @@ Index(
    return context.reply('*Provide Text To generate QR!*')
   }
   let qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${text}`
-  await context.bot.sendUi(context.jid, { caption: '*_Scan QR To Get Your Text_*' }, { quoted: context }, 'image', qrUrl)
+  await context.client.sendMessage(context.jid, { caption: '*_Scan QR To Get Your Text_*' }, { quoted: context }, 'image', qrUrl)
  }
 )
 const audtypes = ['audioMessage', 'videoMessage']
@@ -145,21 +145,21 @@ Index(
   if (!messageType || !audtypes.includes(messageType?.mtype)) {
    return context.reply('*Reply to A Video.*')
   }
-  let filePath = await context.bot.downloadAndSaveMediaMessage(messageType)
+  let filePath = await context.client.downloadAndSaveMediaMessage(messageType)
   const { toAudio } = require('../lib')
   let fileData = fs.readFileSync(filePath)
   let audioData = await toAudio(fileData)
   try {
    fs.unlink(filePath)
   } catch (error) {}
-  return await context.bot.sendMessage(context.jid, {
+  return await context.client.sendMessage(context.jid, {
    audio: audioData,
    mimetype: 'audio/mpeg',
   })
  }
 )
 
-Index(
+bot(
  {
   pattern: 'ptt',
   desc: 'Convert Video To Audio Voice Note.',
