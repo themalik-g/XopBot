@@ -29,7 +29,7 @@ bot(
  },
  async (message, match) => {
   const [date, time] = new Date().toLocaleString('en-IN', { timeZone: config.TIME_ZONE }).split(',')
-  let menuHeader = `╭━━━━━〔 ${BOT_NAME} 〕━━━━━⊷
+  let menuHeader = `╭━━━〔 ${BOT_NAME} 〕━━━⊷
 │ ᴜsᴇʀ: ${message.pushName}
 │ ᴏs: ${os.platform}
 │ ᴘʟᴀᴛғᴏʀᴍ: ${hostname().split('-')[0]}
@@ -70,7 +70,17 @@ bot(
 
   menuHeader += `\n`
   menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
-  return await message.sendMessage(message.jid, menuHeader)
+  let button = {
+   jid: message.jid,
+   button: [
+    { type: 'reply', params: { display_text: 'MENU', id: '#menu' } },
+    { type: 'url', params: { display_text: 'Neeraj-x0', url: 'https://www.neerajx0.xyz/', merchant_url: 'https://www.neerajx0.xyz/' } },
+   ],
+   header: { title: 'X-Asena', subtitle: 'WhatsApp Bot', hasMediaAttachment: false },
+   footer: { text: BOT_NAME },
+   body: { text: menuHeader },
+  }
+  return await message.sendMessage(message.jid, button, {}, 'interactive')
  }
 )
 
