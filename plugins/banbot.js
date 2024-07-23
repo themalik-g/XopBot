@@ -1,54 +1,54 @@
 const { bot } = require('../lib/')
 const { parsedJid } = require('../lib/functions')
 const { banUser, unbanUser, isBanned } = require('../lib/database/ban')
+
+// Handle the ban logic for incoming messages
 bot(
  {
   on: 'message',
   fromMe: true,
   dontAddCommandList: true,
  },
- async (message, match) => {
+ async (message) => {
   if (!message.isBaileys) return
+
   const isban = await isBanned(message.jid)
   if (!isban) return
+
   await message.reply('_Bot is banned in this chat_')
   const jid = parsedJid(message.participant)
-  return await message.client.groupParticipantsUpdate(message.jid, jid, 'remove')
+  await message.client.groupParticipantsUpdate(message.jid, jid, 'remove')
  }
 )
 
+// Handle the antibot command
 bot(
  {
-  pattern: 'banbot',
+  pattern: 'antibot',
   fromMe: true,
-  desc: 'ban bot from a chat',
-  type: '',
+  desc: 'Toggle bot ban status in a chat',
+  type: 'command',
  },
  async (message, match) => {
   const chatid = message.jid
-  const isban = await isBanned(chatid)
-  if (isban) {
-   return await message.sendMessage(message.jid, 'Bot is already banned')
-  }
-  await banUser(chatid)
-  return await message.sendMessage(message.jid, 'Bot banned')
- }
-)
+  const action = match[1] // Expect the command to be followed by "on" or "off"
 
-bot(
- {
-  pattern: 'unbanbot',
-  fromMe: true,
-  desc: 'Unban bot from a chat',
-  type: 'user',
- },
- async (message, match) => {
-  const chatid = message.jid
-  const isban = await isBanned(chatid)
-  if (!isban) {
-   return await message.sendMessage(message.jid, 'Bot is not banned')
+  if (action === 'on') {
+   const isban = await isBanned(chatid)
+   if (isban) {
+    return await message.sendMessage(chatid, 'Bot is already banned')
+   }
+   await banUser(chatid)
+   return await message.sendMessage(chatid, 'Bot banned')
+  } else if (action === 'off') {
+   const isban = await isBanned(chatid)
+   if (!isban) {
+    return await message.sendMessage(chatid, 'Bot is not banned')
+   }
+   await unbanUser(chatid)
+   return await message.sendMessage(chatid, 'Bot unbanned')
+  } else {
+   return await message.sendMessage(chatid, 'Invalid argument. Use "on" to ban or "off" to unban.')
   }
-  await unbanUser(chatid)
-  return await message.sendMessage(message.jid, 'Bot unbanned')
  }
 )
