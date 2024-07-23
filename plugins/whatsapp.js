@@ -215,23 +215,39 @@ bot(
 )
 
 bot(
- {
-  pattern: 'edit',
-  fromMe: true,
-  desc: 'Edit message that was sent by bot',
-  type: 'WhatsApp',
- },
- async (message, text) => {
-  const originalMessage = message.reply_message && message.reply_message.fromMe ? message.reply_message : false
-  if (!originalMessage) {
-   return await message.reply('_Reply Your Message!_')
+  {
+    pattern: 'edit',
+    fromMe: true,
+    desc: 'Edit message that was sent by bot',
+    type: 'WhatsApp',
+  },
+  async (message, text) => {
+    const originalMessage = message.reply_message && message.reply_message.fromMe ? message.reply_message : false
+
+    if (!originalMessage) {
+      return await message.reply('_Reply to a message sent by the bot to edit it!_')
+    }
+
+    if (!text) {
+      return await message.reply('_Provide the new text to replace the original message!_')
+    }
+
+    try {
+      // Use message.edit if available, otherwise fall back to message.client.edit
+      if (typeof message.edit === 'function') {
+        await message.edit(text, { quoted: originalMessage })
+      } else if (message.client && typeof message.client.edit === 'function') {
+        await message.client.edit(originalMessage.key, text)
+      } else {
+        throw new Error('Edit function not available')
+      }
+      return await message.reply('Message edited successfully!')
+    } catch (error) {
+      console.error('Error editing message:', error)
+      return await message.reply('Failed to edit the message. Please try again.')
+    }
   }
-  if (!text) {
-   return await message.reply('_Put Text To Replace!_')
-  }
-  return await message.edit(text, { edit: originalMessage })
- }
-)
+) 
 
 bot(
  {
