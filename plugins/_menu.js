@@ -68,7 +68,6 @@ bot(
   })
 
   menuHeader += `\n`
-  menuHeader += `ᴢᴇɴᴏɴ-ʙᴏᴛ`
   let button = {
    jid: message.jid,
    button: [
