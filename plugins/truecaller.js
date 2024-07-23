@@ -1,5 +1,5 @@
 const { bot } = require('../lib/')
-const { truecaller } = require('../lib/database/truecaller')
+const { truecaller, search } = require('../lib/database/truecaller')
 
 bot(
  {
@@ -50,7 +50,7 @@ bot(
    return await message.reply('_Truecaller search function is not available_')
   }
 
-  const response = await truecaller.search(user)
+  const response = await search(user)
 
   if (!response.status) {
    return await message.reply(response.message)
