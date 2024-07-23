@@ -5,7 +5,7 @@ const gemini = require('../lib/Gemini')
 const { aiImage } = require('../lib/functions')
 const { removeBg } = require('../lib/functions')
 const fetch = require('node-fetch')
-
+const { delay } = require('baileys')
 bot(
  {
   pattern: 'gpt',
@@ -104,3 +104,37 @@ bot(
   )
  }
 )
+
+bot(
+ {
+  pattern: 'gpt5',
+  fromMe: isPrivate,
+  desc: 'Get a response from GPT-5',
+  type: 'tools',
+ },
+ async (message, match) => {
+   if (!match) return await message.reply('What do you want to ask GPT-5?')
+
+   message.react('🤖')
+
+   const prompt = encodeURIComponent(match)
+   const apiurl = `https://ultimetron.guruapi.tech/gpt4?prompt=${prompt}`
+
+   const result = await fetch(apiurl)
+   const response = await result.json()
+   console.log(response)
+
+   const text = response.result.reply
+   await typewriterEffect(message, text)
+ }
+)
+
+async function typewriterEffect(message, text) {
+ let sentMessage = await message.reply('Thinking...')
+
+ for (let i = 0; i < text.length; i++) {
+  const partialText = text.slice(0, i + 1)
+  await message.edit(sentMessage.key, partialText)
+  await delay(100) // Adjust the delay time (in milliseconds) as needed
+ }
+}
