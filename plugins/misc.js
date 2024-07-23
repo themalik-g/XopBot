@@ -62,7 +62,14 @@ bot(
   try {
    const screenshotResponse = await captureScreenshot(url)
    if (screenshotResponse.status === 200) {
-    return await context.sendMessage(screenshotResponse.result, context)
+    // Assuming the result is a buffer or a path to an image file
+    return await context.sendMessage(
+     {
+      image: screenshotResponse.result,
+      caption: `Screenshot of ${url}`,
+     },
+     { quoted: context.message }
+    )
    } else {
     await context.reply(`_Failed to capture screenshot. Status: ${screenshotResponse.status}_`)
    }
