@@ -1,57 +1,10 @@
-
-
- <a href="https://ibb.co/b5642Sg"><img src="https://i.ibb.co/Kx5tLMj/20240721-191651.jpg" alt="20240721-191651" border="0"></a>
-
-
-<h1 align="center">🌀ZENON-BOT🌀</p>
-
-
-#
-
- > Zenon-bot is a multi-functional bot designed for various tasks, including file conversion, downloads, games, group management, image processing, and more. It is built to be easily deployable (free deployment) and customizable, making it a great tool for any community or personal use.
-
-
-
-
-| Function   | Confirmation |
-------------------|--------------
-|- Free Deployment|✅️|
-|- File Conversion|✅️|
-|-      Downloads |✅️|
-|-           Games|✅️|
-|-   Group Management|✅️|
-|-   Image features|✅️|
-|-   Weather Updates|✅️|
-|-   Reminders|✅️|
-|-   Translations|✅️|
-|-   Custom Commands|✅️|
-|-   Integration|✅️|
-|-   Customization|✅️|
-|-   Customizable | ✅️|
-
-## SETUP PROCEDURE 
-
-
-
- ## ⭐️`Star This Repo` ⭐️
-
-Give Zenon-bot a star to show your appreciation and support 🌟 to the team.
-
-
-
-
-## 🎯 `Installation Procedure` 🎯
-
-
-
-  <a href="https://github.com/EX-BOTS/Zenon-bot/fork" target="_blank">
-  <img src="https://img.shields.io/badge/FORK Zenon-bot-black?style=for-the-badge&logo=render" alt="Authenticate With WhatsApp" width="170" height="34">
-</a>
-
-
-
-
-
-
-
-
+𝒁𝑬𝑵𝑶𝑵, 𝑨 𝑺𝑰𝑴𝑷𝑳𝑬 𝑺𝑶𝑭𝑻𝑾𝑨𝑹𝑬 𝑷𝑹𝑶𝑮𝑹𝑨𝑴 𝑻𝑯𝑨𝑻 𝑨𝑼𝑻𝑶𝑴𝑨𝑻𝑬𝑺 𝑻𝑨𝑺𝑲𝑺 𝑨𝑵𝑫 𝑪𝑶𝑵𝑽𝑬𝑹𝑺𝑨𝑻𝑰𝑶𝑵𝑺 𝑶𝑵 𝑻𝑯𝑬 𝑾𝑯𝑨𝑻𝑺𝑨𝑷𝑷 𝑷𝑳𝑨𝑻𝑭𝑶𝑹𝑴, 𝑨𝑳𝑳𝑶𝑾𝑰𝑵𝑮 𝑭𝑶𝑹 𝑰𝑵𝑻𝑬𝑹𝑨𝑪𝑻𝑰𝑽𝑬 𝑨𝑵𝑫 𝑨𝑼𝑻𝑶𝑴𝑨𝑻𝑬𝑫 𝑹𝑬𝑺𝑷𝑶𝑵𝑺𝑬𝑺 𝑻𝑶 𝑼𝑺𝑬𝑹 𝑰𝑵𝑷𝑼𝑻𝑺, 𝑺𝑰𝑴𝑼𝑳𝑨𝑻𝑰𝑵𝑮 𝑯𝑼𝑴𝑨𝑵-𝑳𝑰𝑲𝑬 𝑪𝑶𝑵𝑽𝑬𝑹𝑺𝑨𝑻𝑰𝑶𝑵𝑺 𝑨𝑵𝑫 𝑬𝑵𝑨𝑩𝑳𝑰𝑵𝑮 𝑽𝑨𝑹𝑰𝑶𝑼𝑺 𝑨𝑷𝑷𝑳𝑰𝑪𝑨𝑻𝑰𝑶𝑵𝑺, 𝑰𝑵𝑪𝑳𝑼𝑫𝑰𝑵𝑮 𝑰𝑵𝑭𝑶𝑹𝑴𝑨𝑻𝑰𝑶𝑵 𝑫𝑰𝑺𝑺𝑬𝑴𝑰𝑵𝑨𝑻𝑰𝑶𝑵 𝑨𝑵𝑫 𝑴𝑶𝑹𝑬...
+𝒁𝑬𝑵𝑶𝑵 𝑰𝑺 𝑬𝑵𝑫𝑶𝑾𝑬𝑫 𝑾𝑰𝑻𝑯 𝑨 𝑴𝑼𝑳𝑻𝑰𝑭𝑨𝑪𝑬𝑻𝑬𝑫 𝑨𝑹𝑹𝑨𝒀 𝑶𝑭 𝑲𝑬𝒀 𝑨𝑻𝑻𝑹𝑰𝑩𝑼𝑻𝑬𝑺, 𝑰𝑵𝑪𝑳𝑼𝑫𝑰𝑵𝑮...
+-
+-
+-
+-
+-
+-
+-
+-
